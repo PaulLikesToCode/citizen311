@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ce24f776-7f10-43e2-b41e-9f4c62082dd0" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/models/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/views/app.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/citizen311/.settings.swp" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/forms/__init__.py" afterPath="$PROJECT_DIR$/app/forms/__init__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/_template.html" afterPath="$PROJECT_DIR$/app/templates/_template.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/app_models.py" afterPath="$PROJECT_DIR$/app/models/app_models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/home.html" afterPath="$PROJECT_DIR$/app/templates/home.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/home.py" afterPath="$PROJECT_DIR$/app/views/home.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/citizen311/settings.py" afterPath="$PROJECT_DIR$/citizen311/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/myapp.py" afterPath="$PROJECT_DIR$/app/views/myapp.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/citizen311/urls.py" afterPath="$PROJECT_DIR$/citizen311/urls.py" />
     </list>
     <ignored path="citizen311.iws" />
@@ -20,15 +13,15 @@
     <file path="/home.html" changelist="ce24f776-7f10-43e2-b41e-9f4c62082dd0" time="1379103897294" ignored="false" />
     <file path="/__init__.py" changelist="ce24f776-7f10-43e2-b41e-9f4c62082dd0" time="1379442896836" ignored="false" />
     <file path="/models.py" changelist="ce24f776-7f10-43e2-b41e-9f4c62082dd0" time="1379092201531" ignored="false" />
-    <file path="/urls.py" changelist="ce24f776-7f10-43e2-b41e-9f4c62082dd0" time="1379454573935" ignored="false" />
+    <file path="/urls.py" changelist="ce24f776-7f10-43e2-b41e-9f4c62082dd0" time="1379482018858" ignored="false" />
     <file path="/app_models.py" changelist="ce24f776-7f10-43e2-b41e-9f4c62082dd0" time="1379451305113" ignored="false" />
-    <file path="/myapp.py" changelist="ce24f776-7f10-43e2-b41e-9f4c62082dd0" time="1379463428079" ignored="false" />
+    <file path="/myapp.py" changelist="ce24f776-7f10-43e2-b41e-9f4c62082dd0" time="1379481972309" ignored="false" />
     <file path="/lookup.html" changelist="ce24f776-7f10-43e2-b41e-9f4c62082dd0" time="1379451868297" ignored="false" />
     <file path="/signup.html" changelist="ce24f776-7f10-43e2-b41e-9f4c62082dd0" time="1379206154750" ignored="false" />
     <file path="/signup_form.py" changelist="ce24f776-7f10-43e2-b41e-9f4c62082dd0" time="1379108432357" ignored="false" />
     <file path="/settings.py" changelist="ce24f776-7f10-43e2-b41e-9f4c62082dd0" time="1379459883779" ignored="false" />
     <file path="/app_forms.py" changelist="ce24f776-7f10-43e2-b41e-9f4c62082dd0" time="1379448205625" ignored="false" />
-    <file path="/_template.html" changelist="ce24f776-7f10-43e2-b41e-9f4c62082dd0" time="1379437067434" ignored="false" />
+    <file path="/_template.html" changelist="ce24f776-7f10-43e2-b41e-9f4c62082dd0" time="1379481408067" ignored="false" />
     <file path="/comments.html" changelist="ce24f776-7f10-43e2-b41e-9f4c62082dd0" time="1379443385003" ignored="false" />
     <file path="/login.html" changelist="ce24f776-7f10-43e2-b41e-9f4c62082dd0" time="1379458222358" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -64,30 +57,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="__init__.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/forms/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="77" selection-start="77" selection-end="77" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="app_forms.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/forms/app_forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="43" selection-start="68" selection-end="68" vertical-scroll-proportion="0.0">
+            <state line="28" column="19" selection-start="893" selection-end="893" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="myapp.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="myapp.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/myapp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="58" column="39" selection-start="2156" selection-end="2156" vertical-scroll-proportion="0.40412045">
+            <state line="44" column="47" selection-start="1605" selection-end="1605" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="e#0#36#0" expanded="true" />
+                <element signature="e#0#58#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -111,10 +95,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="urls.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/citizen311/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="24" selection-start="584" selection-end="584" vertical-scroll-proportion="0.0">
+            <state line="17" column="61" selection-start="790" selection-end="790" vertical-scroll-proportion="0.38772213">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="comments.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/comments.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="56" selection-start="184" selection-end="184" vertical-scroll-proportion="-3.125">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_template.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/_template.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="19" column="15" selection-start="814" selection-end="814" vertical-scroll-proportion="-11.875">
               <folding />
             </state>
           </provider>
@@ -143,22 +145,22 @@
         <option value="$PROJECT_DIR$/app/templates/signup.html" />
         <option value="$PROJECT_DIR$/app/templates/signin.html" />
         <option value="$PROJECT_DIR$/app/templates/application.js" />
-        <option value="$PROJECT_DIR$/app/templates/_template.html" />
         <option value="$PROJECT_DIR$/app/models/__init__.py" />
         <option value="$PROJECT_DIR$/app/forms/__init__.py" />
         <option value="$PROJECT_DIR$/app/templates/comments.html" />
         <option value="$PROJECT_DIR$/app/forms/app_forms.py" />
         <option value="$PROJECT_DIR$/app/models/app_models.py" />
         <option value="$PROJECT_DIR$/app/templates/lookup.html" />
-        <option value="$PROJECT_DIR$/citizen311/urls.py" />
         <option value="$PROJECT_DIR$/app/templates/login.html" />
         <option value="$PROJECT_DIR$/citizen311/settings.py" />
+        <option value="$PROJECT_DIR$/app/templates/_template.html" />
         <option value="$PROJECT_DIR$/app/views/myapp.py" />
+        <option value="$PROJECT_DIR$/citizen311/urls.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="18" />
+    <option name="x" value="38" />
     <option name="y" value="22" />
     <option name="width" value="1109" />
     <option name="height" value="790" />
@@ -490,7 +492,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="18" y="22" width="1109" height="790" extended-state="0" />
+    <frame x="38" y="22" width="1109" height="790" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -575,16 +577,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/static/js/application.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/_template.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="77" selection-start="661" selection-end="661" vertical-scroll-proportion="-6.875" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/submit.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
@@ -592,7 +584,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/signup.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="28" selection-start="120" selection-end="181" vertical-scroll-proportion="-3.125" />
+        <state line="5" column="28" selection-start="120" selection-end="181" vertical-scroll-proportion="-3.125">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/__init__.py">
@@ -610,14 +604,11 @@
         <state line="1" column="0" selection-start="44" selection-end="44" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/comments.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="11" selection-start="119" selection-end="119" vertical-scroll-proportion="-2.5" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/lookup.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="61" selection-start="112" selection-end="112" vertical-scroll-proportion="-1.25" />
+        <state line="2" column="61" selection-start="112" selection-end="112" vertical-scroll-proportion="-1.25">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/forms/__init__.py">
@@ -641,20 +632,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/citizen311/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="24" selection-start="584" selection-end="584" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/forms/app_forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="43" selection-start="68" selection-end="68" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/citizen311/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="144" column="61" selection-start="5294" selection-end="5294" vertical-scroll-proportion="0.0">
@@ -662,12 +639,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/manage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/forms/app_forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="19" selection-start="893" selection-end="893" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/comments.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="56" selection-start="184" selection-end="184" vertical-scroll-proportion="-3.125">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/_template.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="15" selection-start="814" selection-end="814" vertical-scroll-proportion="-11.875">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/myapp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="39" selection-start="2156" selection-end="2156" vertical-scroll-proportion="0.40412045">
+        <state line="44" column="47" selection-start="1605" selection-end="1605" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#0#36#0" expanded="true" />
+            <element signature="e#0#58#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/citizen311/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="61" selection-start="790" selection-end="790" vertical-scroll-proportion="0.38772213">
+          <folding />
         </state>
       </provider>
     </entry>

@@ -1,13 +1,12 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from app.models import Complaints, Comments
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from app.forms import SigninForm, SignupConfirmForm, CommentsForm
 from django.contrib.auth.models import User
 import requests
-from django.contrib.auth import authenticate
-from django.contrib.auth import hashers
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import auth
 
-#    url = 'http://data.sfgov.org/resource/vw6y-z8j6.json'
 
 # Function for new users to sign up:
 def signup(request):
@@ -30,14 +29,20 @@ def login(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
-        if user is not None:
-            request.session['username'] = username
-            return HttpResponse("Thanks for signing in.")
+        if user is not None and user.is_active:
+#            request.session['username'] = username
+            auth.login(request, user)
+            return redirect("comments")
         else:
             return HttpResponse("Your username and password do not match.")
     else:
         form = SigninForm()
         return render(request, 'login.html', {'form':form})
+
+#Let a user sign out:
+def logout_views(request):
+    logout(request)
+    return HttpResponse('Thanks for logging out')
 
 
 def reports(request):
@@ -91,24 +96,26 @@ def lookup(request):
 '''
 
 def comments(request):
-    if request.method == "POST":
-        form = CommentsForm(request.POST)
-        if form.is_valid():
-            print "form is valid"
-            user = form.cleaned_data['username']
-            complaints = form.cleaned_data['complaints']
-            comments = form.cleaned_data['comments']
-            ThisComment = Comments(user_id=user, comments=comments, complaints_id=complaints)
-            ThisComment.save()
-            print ThisComment
-        return HttpResponse("Thank you for your input.")
+    if not request.user.is_authenticated():
+        return HttpResponse("You need to be signed in first.")
     else:
-        form = CommentsForm()
-        data = {
-            "form":form
-        }
-        return render(request, 'comments.html', data)
-
+        if request.method == "POST":
+            form = CommentsForm(request.POST)
+            if form.is_valid():
+                print "form is valid"
+                user = form.cleaned_data['username']
+                complaints = form.cleaned_data['complaints']
+                comments = form.cleaned_data['comments']
+                ThisComment = Comments(user_id=user, comments=comments, complaints_id=complaints)
+                ThisComment.save()
+                print ThisComment
+            return HttpResponse("Thank you for your input.")
+        else:
+            form = CommentsForm()
+            data = {
+                "form":form
+            }
+            return render(request, 'comments.html', data)
 
 
 

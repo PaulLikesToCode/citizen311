@@ -14,7 +14,8 @@ urlpatterns = patterns('app.views',
     url(r'^lookup/(?P<id>\d+)$', 'myapp.lookup', name='lookup'),
     url(r'^login$', 'myapp.login', name='login'),
 #    url(r'^lookup$', 'myapp.lookup', name='lookup'),
-    url(r'^enter-comments$', 'myapp.comments', name='comments')
+    url(r'^enter-comments$', 'myapp.comments', name='comments'),
+    url(r'^logout$', 'myapp.logout_views', name='logout_views')
 
     # Examples:
     # url(r'^$', 'citizen311.views.home', name='home'),
