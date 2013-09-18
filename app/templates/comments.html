@@ -1,0 +1,8 @@
+{% extends '_template.html' %}
+{% block content %}
+    <h2>Do you have a comment?</h2>
+<form method="POST">
+    {{ form.as_p }}
+    <input type="submit" name="submit" value="submit" />
+</form>
+{% endblock %}

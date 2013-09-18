@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.contrib.auth.views import login
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -6,11 +7,14 @@ from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('app.views',
 	url(r'^$', 'home.main', name='home'),
-    url(r'^reports$', 'app.reports', name='reports'),
-    url(r'^about$', 'app.about', name='about'),
-    url(r'^submit$', 'app.submit', name='submit'),
-    url(r'^signup$', 'app.signup', name='signup'),
-
+    url(r'^reports$', 'myapp.reports', name='reports'),
+    url(r'^about$', 'myapp.about', name='about'),
+    url(r'^submit$', 'myapp.submit', name='submit'),
+    url(r'^signup$', 'myapp.signup', name='signup'),
+    url(r'^lookup/(?P<id>\d+)$', 'myapp.lookup', name='lookup'),
+    url(r'^login$', 'myapp.login', name='login'),
+#    url(r'^lookup$', 'myapp.lookup', name='lookup'),
+    url(r'^enter-comments$', 'myapp.comments', name='comments')
 
     # Examples:
     # url(r'^$', 'citizen311.views.home', name='home'),

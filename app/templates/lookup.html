@@ -1,0 +1,11 @@
+{% extends '_template.html' %}
+{% block content %}
+    <h2>Here's what people think about case no. {{ complaint.id }}</h2>
+       <ul>
+       {%  for comment in complaint.comments.all %}
+           <li>{{ comment.user }}</li>
+           <li>{{ comment.comments_created_date }}</li>
+           <li>{{ comment.comments }}</li>
+       {% endfor %}
+       </ul>
+{% endblock %}

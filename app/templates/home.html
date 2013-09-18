@@ -3,17 +3,18 @@
 <head>
 	<title>This is citizen311</title>
 	<!-- include all the common js and css libraries -->
-	{% block additional js css %}{% endblock %}
 </head>
 <body>
 	<header>
-		{% block test %}{% endblock}
 	</header>
 	<content>
-		{%block content %}{% endblock %}
+        {% for case in complaint %}
+            <p>Case ID number {{ case.case_id}} was created on {{ case.opened }}. It is a {{ case.category }}
+        at {{ case.address }}. Here are the comments:</p>
+            <p>{{ case.comments }}</p>
+        {% endfor %}
 	</content>
 	<footer>
-		Footer Information Goes Here
 	</footer>
 </body>
 </html>
