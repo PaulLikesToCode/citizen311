@@ -59,6 +59,7 @@ var infoWindow;
     $('#comments').append( Mustache.render( $('#comments-template').html(), comments) );
 });*/
 
+/*
 window.fbAsyncInit = function() {
     FB.init({
         appId : '146925758848407', // App ID
@@ -115,14 +116,14 @@ function testAPI() {
     });
 }
 
-function getDynamicMap(position) {
+*/
+/*function getDynamicMap(position) {
     var mapOptions = {
         center: new google.maps.LatLng(37.797677,-122.394339),
         zoom: 15,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
     console.log("complaints");
     for (var id in complaints) {
         var lat = complaints[id].point.latitude;
@@ -158,6 +159,7 @@ function fillCommentsBox(case_id) {
     var complaintsOutput = Mustache.render(complaintsMustache, complaints[case_id]);
     $('#complaints').html(complaintsOutput);
 }
+*/
 /*if (window.location.href.search('case_id=')!==-1) {
 var case_id = getQueryVariable('case_id');
 currentComplaint = complaints[case_id];
@@ -165,3 +167,61 @@ currentComment = comments[case_id];
 console.log(currentComplaint);
 }*/
 
+/*
+var markers = {{ json|safe }};
+console.log(markers);
+var lat;
+var lng;
+var address;
+var case_id;
+var category;
+var customInfo;
+function getDynamicMap(position) {
+    var mapOptions = {
+        center: new google.maps.LatLng(37.797677,-122.394339),
+        zoom: 14,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    for (var i in markers) {
+        var lat = markers[i].fields.latitude;
+        var lng = markers[i].fields.longitude;
+        var address = markers[i].fields.address;
+        var case_id = markers[i].fields.case_id;
+        var category = markers[i].fields.category;
+        var pk = markers[i].pk - 1;
+        var comment = markers[i].fields.comments;
+        var customInfo = '<a href="#" onclick="fillCommentsBox('+pk+')">'+category+'</a>';
+        //var customInfo = '<a href="http://bootcamp.rocketu.com/exercises/project/reports-page.html$'+complaints[id].case_id+'">'+complaints[id].case_id+'</a>';
+        var infoWindow = new google.maps.InfoWindow({
+            content: customInfo
+        });
+        var	marker = new google.maps.Marker({
+            position: new google.maps.LatLng(lat,lng),
+            map: map,
+            title: customInfo
+           });
+        google.maps.event.addListener(marker, 'click', function() {
+            console.log(this.title);
+            infoWindow.setContent(this.title);
+            infoWindow.open(map,this);
+        });
+    }
+}
+google.maps.event.addDomListener(window, 'load', getDynamicMap);
+
+function fillCommentsBox(pk) {
+    $('#opened').html(markers[pk].fields.opened);
+    $('#status').html(markers[pk].fields.status);
+    $('#category').html(markers[pk].fields.category);
+    $('#address').html(markers[pk].fields.address);
+    console.log(markers[pk].fields.complaints)
+}
+// Hides/Shows the anchor tag:
+$(document).ready(function() {
+    $('#hidden_button').hide();
+    $('#map').click(function() {
+        $('#hidden_button').show();
+    });
+});
+*/

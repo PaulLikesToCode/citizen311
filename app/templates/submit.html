@@ -1,0 +1,70 @@
+{% extends '_template.html' %}
+{% block content %}
+<script>
+
+    var geocoder;
+    var latitude;
+    var longitude;
+    var address;
+    var isCallingAPI = false;
+    var results;
+
+    function getAddress() {
+        address = document.getElementById('id_address').value;
+        $.ajax({
+            type:'get',
+            url:'http://maps.googleapis.com/maps/api/geocode/json?address='+address+'+San+Francisco+CA&sensor=false',
+            data: {},
+            dataType: 'json',
+            success: function(json) {
+                console.log(json);
+                latitude = json.results[0].geometry.location.lat;
+                longitude = json.results[0].geometry.location.lng;
+                $('#id_latitude').val(latitude);
+                $('#id_longitude').val(longitude);
+                var mapOptions = {
+                center: new google.maps.LatLng(latitude,longitude),
+                zoom: 14,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+                }
+                map = new google.maps.Map(document.getElementById('map'), mapOptions);
+                var	marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(latitude,longitude),
+                            map: map
+                });
+                }
+        });
+    }
+
+    function getDynamicMap(position) {
+        var mapOptions = {
+            center: new google.maps.LatLng(latitude,longitude),
+            zoom: 14,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        var	marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(latitude,longitude),
+                    map: map
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', getDynamicMap);
+
+
+    $(document).ready(function() {
+       $('#id_address').keyup(function() {
+          getAddress();
+       });
+    });
+// if ($(this).length>3)
+</script>
+    <h2>What's the problem?</h2>
+<form method="POST">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" name="submit" value="submit" />
+</form>
+<div style="width: 600px; margin-top: 100px">
+    <div id="map" style="width: 500px; height: 500px">
+    </div>
+</div>
+{% endblock %}

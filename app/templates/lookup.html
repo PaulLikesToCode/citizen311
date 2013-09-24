@@ -1,6 +1,17 @@
 {% extends '_template.html' %}
 {% block content %}
-    <h2>Here's what people think about case no. {{ complaint.id }}</h2>
+    <h2>Enter in a case id here.</h2>
+    <form method="POST">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" name="submit" value="submit" />
+    </form>{%  csrf_token %}
+    <h3>Here are the case details:</h3>
+        <ul>
+            <li> {{ complaint.address }}</li>
+            <li> {{ complaint.category }}</li>
+
+        </ul>
+    <h3>Here's what people think about case no. {{ complaint.id }}</h3>
        <ul>
        {%  for comment in complaint.comments.all %}
            <li>{{ comment.user }}</li>

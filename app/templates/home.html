@@ -1,18 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>This is citizen311</title>
-	<!-- include all the common js and css libraries -->
-</head>
-<body>
-	<header>
-	</header>
-	<content>
-        {% for case in complaint %}
-            <p>Case ID number {{ case.case_id}} was created on {{ case.opened }}. It is a {{ case.category }}
-        at {{ case.address }}. Here are the comments:</p>
-            <p>{{ case.comments }}</p>
-        {% endfor %}
+{% extends '_template.html' %}
+{% block content %}
+{{ complaint|safe }}
+    <h2>Welcome to citizen311</h2>
+    	<div style="width: 600px; float: left; margin-top: 100px">
+            <div id="map" style="width: 500px; height: 500px">
+            </div>
+        </div>
+{%  endblock %}
 	</content>
 	<footer>
 	</footer>

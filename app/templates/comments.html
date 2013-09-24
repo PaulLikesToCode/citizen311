@@ -1,7 +1,21 @@
 {% extends '_template.html' %}
 {% block content %}
     <h2>Do you have a comment?</h2>
-<form method="POST">
+    <script>
+/*        $(function() {
+            if (localStorage.id != null) {
+                var id = localStorage.id;
+//                $('#complaints').html(id);
+                console.log(id);
+            }
+        });
+*/      id = localStorage.id;
+        console.log(id);
+        $(document).ready(function() {
+            $('#id_complaints').val(id);
+        });
+    </script>
+<form method="POST">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" name="submit" value="submit" />
 </form>
