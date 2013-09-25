@@ -1,5 +1,4 @@
 from django.conf.urls import patterns, include, url
-from django.conf.urls import *
 from django.contrib.auth.views import login
 from tastypie.api import Api
 from app.api.resources import Complaints, Comments
@@ -25,6 +24,7 @@ urlpatterns = patterns('app.views',
     url(r'^logout$', 'myapp.logout_views', name='logout_views'),
     url(r'^markers-info', 'myapp.markers_info', name='markers_info'),
     url(r'^api/', include(v1_api.urls)),
+    url(r'^lookup/(?P<id>\d+)$', 'myapp.lookup_report', name='lookup_report')
     # Examples:
     # url(r'^$', 'citizen311.views.home', name='home'),
     # url(r'^citizen311/', include('citizen311.foo.urls')),

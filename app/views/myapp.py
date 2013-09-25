@@ -172,6 +172,13 @@ def markers_info(request):
 #    assert isinstance(user_dict, object)
     return render(request, 'markers-info.html', { 'json': json })
 
+def lookup_report(request, id):
+    complaint = Complaints.objects.get(id=id)
+    data = {
+        'complaint': complaint,
+    }
+    return render(request, "lookup.html", data)
+
 
 
 

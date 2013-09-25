@@ -1,14 +1,250 @@
-{% extends '_template.html' %}
-{% block content %}
-{{ complaint|safe }}
-    <h2>Welcome to citizen311</h2>
-    	<div style="width: 600px; float: left; margin-top: 100px">
-            <div id="map" style="width: 500px; height: 500px">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bootstrap 101 Template </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    {% load staticfiles %}
+    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet" media="screen">
+    <link href="{% static "css/main.css" %}" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href= "{% static "css/whhg.css" %}">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]> <script src="../../assets/js/html5shiv.js"></script> <script src="../../assets/js/respond.min.js"></script> <![endif]-->
+</head>
+<body onload="initialize()">
+    <!--autorization modal-->
+      <a href="#" class="btn btn-danger btn-sm btm-zindex none" id="Show_cont">Show content</a>
+    <div class="modal fade" id="autorization">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Autorization</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" />
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" />
+                                Check me out
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Sign in</button>
+                    <button type="button" class="btn btn-primary btn-sm">Create account</button>
+                </div>
             </div>
+            <!-- /.modal-content -->
         </div>
-{%  endblock %}
-	</content>
-	<footer>
-	</footer>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <!--map-->
+    <div id="map_canvas" class="map"></div>
+    <!--/map-->
+
+        <!--Content-->
+        <div class="col-md-11 side-bar" id="cont">
+            <!--header-->
+            <div class="row">
+                <div class="col-md-12 header">
+                    <div class="logo">
+                        <a href="start.html">
+                            <!--img src="img/logo.png" alt="..."/--></a>
+                    </div>
+                </div>
+            </div>
+            <!--/header-->
+             <!--Map open (for adaptive)-->
+            <div class="row map_open">
+                <div class="col-md-12">
+                    <a href="#" id="map_open">Show map</a>
+                </div>
+            </div>
+              <!--/Map open (for adaptive)-->
+            <!--Category menu-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="tabs">
+                        <div id="tab1" class="active tab">
+                            <h5 class="cat">Places where you can eat</h5>
+                            <ul class="catalog">
+                                <li><a href="#">Cafe<span>22</span></a></li>
+                                <li><a href="#">Bar<span>22</span></a></li>
+                                <li><a href="#">Restaurant<span>22</span></a></li>
+                                <li><a href="#" class="activepoint">Fast food<span>22</span><p class="arrow"></p>
+                                </a></li>
+                                <li><a href="#">Canteens<span>22</span></a></li>
+                                <li><a href="#">Pitstop<span>22</span></a></li>
+                                <li><a href="#">Cafe<span>22</span></a></li>
+                                <li><a href="#">Bar<span>22</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/Category menu-->
+            <!--Search-->
+            <div class="row search_inner_box">
+                <div class="col-md-12">
+                    <input type="text" class="form-control input-sm" placeholder="Text input" />
+                    <a href="4.html" class="btn btn-danger btn-sm pd-top">Search</a>
+                    <a href="3.html" class="btn btn-primary btn-sm pd-top">Show places near me</a>
+                </div>
+            </div>
+            <!--/search-->
+        </div>
+        <!--/Content-->
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{% static "js/jQueryv2.0.3.js" %}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static "js/bootstrap.js" %}"></script>
+    <!--Google maps API linl-->
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB31mjMaXNA33VUKwCndXANCkbgULTyY2k&sensor=false"></script>
+    <!--Your map settings script-->
+    <script>
+        var markers = {{ json|safe }};
+        var lat;
+        var lng;
+        var address;
+        var case_id;
+        var category;
+        var customInfo;
+        function getDynamicMap(position) {
+            var mapOptions = {
+                center: new google.maps.LatLng(37.797677,-122.394339),
+                zoom: 14,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+            for (var i in markers) {
+                var lat = markers[i].fields.latitude;
+                var lng = markers[i].fields.longitude;
+                var address = markers[i].fields.address;
+                var case_id = markers[i].fields.case_id;
+                var category = markers[i].fields.category;
+                var pk = markers[i].pk - 1;
+                var comment = markers[i].fields.comments;
+                var customInfo = '<a href="/lookup/'+pk+'">'+category+'</a>';
+                //var customInfo = '<a href="http://bootcamp.rocketu.com/exercises/project/reports-page.html$'+complaints[id].case_id+'">'+complaints[id].case_id+'</a>';
+                var infoWindow = new google.maps.InfoWindow({
+                    content: customInfo
+                });
+                var	marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(lat,lng),
+                    map: map,
+                    title: customInfo
+                   });
+                google.maps.event.addListener(marker, 'click', function() {
+                    console.log(this.title);
+                    infoWindow.setContent(this.title);
+                    infoWindow.open(map,this);
+                });
+            }
+        }
+        google.maps.event.addDomListener(window, 'load', getDynamicMap);
+
+        function fillCommentsBox(pk) {
+            localStorage.id = pk + 1;
+            localStorage.address = address;
+            localStorage.category = category;
+            localStorage.opened = markers[pk].fields.opened;
+            localStorage.lat = lat;
+            localStorage.lng = lng;
+            $('#opened').html(markers[pk].fields.opened);
+            $('#status').html(markers[pk].fields.status);
+            $('#category').html(markers[pk].fields.category);
+            $('#address').html(markers[pk].fields.address);
+        }
+    </script>
+    <script type="text/javascript" src="{% static "js/map.js" %}"></script>
+    <!--jQuery-->
+        <script type="text/javascript" src="{% static "js/jQueryv2.0.3.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/pxgradient-1.0.2.jquery.js" %}"></script>
+    <!--Script for worked left smile categoryes menu-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+                        "use strict";
+            $(".inner ul li a").each(function (i) {
+                $(".inner ul li a:eq(" + i + ")").click(function () {
+                    var tab_id = i + 1;
+                    $(".inner ul li a").removeClass("active");
+                    $("#tabs .active").removeClass("active");
+                    $(this).addClass("active");
+                    $("#tabs div").stop(false, false).hide();
+                    $("#tab" + tab_id).stop(false, false).show();
+                    return false;
+                })
+            })
+        })
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+                        "use strict";
+            $("#tabs_point li a").each(function (i) {
+                $("#tabs_point li a:eq(" + i + ")").click(function () {
+                    var tab_id = i + 1;
+                    $("#tabs_point li a").removeClass("active");
+                    $(".tabs_block_point .active").removeClass("active");
+                    $(this).addClass("active");
+                    $(".tabs_block_point div").stop(false, false).hide();
+                    $("#point_tab" + tab_id).stop(false, false).show();
+                    return false;
+                })
+            })
+        })
+    </script>
+    <!--/Script for worked left smile categoryes menu-->
+    <!--Script for worked profile page-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+                        "use strict";
+            $('#link_open').on('click', function () {
+                if ($('#link_open').hasClass("clooses")) {
+                    $("#open_span").removeClass("close_span").addClass("open_span");
+                    $("#profile").removeClass("profile_closed");
+                    $("#link_open").removeClass("clooses");
+                    $("#cont").addClass("none");
+                }
+                else {
+                    $("#open_span").addClass("close_span").removeClass("open_span");
+                    $("#profile").addClass("profile_closed");
+                    $("#link_open").addClass("clooses");
+                    $("#cont").removeClass("none");
+                }
+            })
+              $('#map_open').on('click', function () {
+                            "use strict";
+            $("#cont").addClass("none");
+            $("#Show_cont").removeClass("none");
+
+        })
+        $('#Show_cont').on('click', function () {
+                        "use strict";
+            $("#cont").removeClass("none");
+        })
+        });
+    </script>
+    <!--/Script for worked profile page-->
+    <!--Script for gradient icon in general menu-->
+    <script type="text/javascript">
+        $(function () {
+                        "use strict";
+            $(".gradientmenu").pxgradient({
+                step: 10,
+                colors: ["#fdfeff", "#cfeefa"],
+                dir: "y"
+            });
+        });
+    </script>
 </body>
 </html>

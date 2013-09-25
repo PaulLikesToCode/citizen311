@@ -1,22 +1,256 @@
-{% extends '_template.html' %}
-{% block content %}
-    <h2>Enter in a case id here.</h2>
-    <form method="POST">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" name="submit" value="submit" />
-    </form>{%  csrf_token %}
-    <h3>Here are the case details:</h3>
-        <ul>
-            <li> {{ complaint.address }}</li>
-            <li> {{ complaint.category }}</li>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ciztizen311 Case Details </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+        {% load staticfiles %}
+    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet" media="screen">
+    <link href="{% static "css/main.css" %}"rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="{% static "css/whhg.css" %}">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]> <script src="../../assets/js/html5shiv.js"></script> <script src="../../assets/js/respond.min.js"></script> <![endif]-->
+</head>
+<body onload="initialize()">
+    <!--autorization modal-->
+      <a href="#" class="btn btn-danger btn-sm btm-zindex none" id="Show_cont">Show content</a>
+    <div class="modal fade" id="autorization">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Autorization</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" />
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" />
+                                Check me out
 
-        </ul>
-    <h3>Here's what people think about case no. {{ complaint.id }}</h3>
-       <ul>
-       {%  for comment in complaint.comments.all %}
-           <li>{{ comment.user }}</li>
-           <li>{{ comment.comments_created_date }}</li>
-           <li>{{ comment.comments }}</li>
-       {% endfor %}
-       </ul>
-{% endblock %}
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <a href="1.html" class="btn btn-danger btn-sm">Sign in</a>
+                    <a href="1.html" class="btn btn-primary btn-sm">Create account</a>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <!--map-->
+
+    <div id="map_canvas" class="map"></div>
+    <!--/map-->
+        <!--Content-->
+        <div class="col-md-11 general_content_styles vcard" id="cont">
+            <!--header-->
+            <div class="row">
+                <div class="col-md-12 header">
+                    <div class="logo">
+                        <a href="start.html">
+                            <img src="img/logo.png" alt="..."/></a>
+                    </div>
+
+                </div>
+            </div>
+            <!--/header-->
+             <!--Map open (for adaptive)-->
+            <div class="row map_open">
+                <div class="col-md-12">
+                    <a href="#" id="map_open">Show map</a>
+                </div>
+            </div>
+              <!--/Map open (for adaptive)-->
+            <div class="row">
+                <div class="col-md-12 point_description">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="img/icon/01.png" class="point"  alt="..."/>
+                            <h2>{{ complaint.request_details }}</h2>
+                        </div>
+                        <div class="col-md-6 btns">
+                            <a href="" class="btn btn-default btn-sm buttons_head"><i class="icon-user"></i>Invite a friend</a>
+                            <a href="" class="btn btn-danger btn-sm buttons_head"><i class="icon-automobile-car"></i></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="descr_text">{{ complaint.address }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 placeholder">
+                            <img src="img/placeholder1.png" alt="...">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul id="tabs_point">
+                                <li><a href="#" class="active">Comments <span></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="tabs_block_point">
+                                <div id="point_tab1" class="tab_point_decr active">
+                                    <!--Comment-->
+                                    <ul>
+                                        {% for i in complaint %}
+                                        <div>{{ username.complaint }}</div>
+                                        <div>{{ username. }}</div>
+
+
+                                    </ul>
+                                    <div class="row comm">
+                                        <div class="col-md-12 comment">
+                                            <img src="img/no_ava.png" alt="..."><div class="infocomment">
+                                                <div><span>{{ comment.username }}</span><span>{{ comment. }}</span></div>
+                                                <div class="rating">
+                                                    <img src="img/start.gif" alt="..."><a href="" class="btn-default btn-rouned">+</a><a href="" class="btn-default btn-rouned">-</a>
+                                                </div>
+                                            </div>
+                                            <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also </span>
+                                        </div>
+                                    </div>
+                                    <!--/Comment-->
+
+                                    <a href="@" class="btn btn-danger btn-sm">Add comment</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--/Content-->
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+
+    <!--   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>-->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src=" {% static "js/bootstrap.js" %}"></script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src=" {% static "js/bootstrap.js" %}"></script>
+    <!--Google maps API linl-->
+
+    <script type="text/javascript" src= "http://maps.googleapis.com/maps/api/js?key=AIzaSyCsbzuJDUEOoq-jS1HO-LUXW4qo0gW9FNs&sensor=false"></script>
+    <!--Your map settings script-->
+    <script type="text/javascript" src= "{% static "js/map.js" %}"></script>
+    <!--jQuery-->
+        <script type="text/javascript" src= "{%  static "js/jQueryv2.0.3.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/pxgradient-1.0.2.jquery.js" %}"></script>
+    <!--Script for worked left smile categoryes menu-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+                        "use strict";
+            $(".inner ul li a").each(function (i) {
+                $(".inner ul li a:eq(" + i + ")").click(function () {
+                    var tab_id = i + 1;
+                    $(".inner ul li a").removeClass("active");
+                    $("#tabs .active").removeClass("active");
+                    $(this).addClass("active");
+                    $("#tabs div").stop(false, false).hide();
+                    $("#tab" + tab_id).stop(false, false).show();
+                    return false;
+                })
+            })
+        })
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+                        "use strict";
+            $("#tabs_point li a").each(function (i) {
+                $("#tabs_point li a:eq(" + i + ")").click(function () {
+                    var tab_id = i + 1;
+                    $("#tabs_point li a").removeClass("active");
+                    $(".tabs_block_point .active").removeClass("active");
+                    $(this).addClass("active");
+                    $(".tabs_block_point div").stop(false, false).hide();
+                    $("#point_tab" + tab_id).stop(false, false).show();
+                    return false;
+                })
+            })
+        })
+    </script>
+    <!--/Script for worked left smile categoryes menu-->
+    <!--Script for worked profile page-->
+    <script type="text/javascript" src="{% static "js/owl.carousel.js" %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+                        "use strict";
+            $('#link_open').on('click', function () {
+                if ($('#link_open').hasClass("clooses")) {
+                    $("#open_span").removeClass("close_span").addClass("open_span");
+                    $("#profile").removeClass("profile_closed");
+                    $("#link_open").removeClass("clooses");
+                    $("#cont").addClass("none");
+                }
+                else {
+                    $("#open_span").addClass("close_span").removeClass("open_span");
+                    $("#profile").addClass("profile_closed");
+                    $("#link_open").addClass("clooses");
+                    $("#cont").removeClass("none");
+                }
+            })
+              $('#map_open').on('click', function () {
+                            "use strict";
+            $("#cont").addClass("none");
+            $("#Show_cont").removeClass("none");
+
+        })
+        $('#Show_cont').on('click', function () {
+                        "use strict";
+            $("#cont").removeClass("none");
+        })
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+                        "use strict";
+            $("#owl-demo, #myguest").owlCarousel({
+                items: 6,
+                itemsDesktop: [1000, 5],
+                itemsDesktopSmall: [900, 6],
+                itemsTablet: [600, 2],
+                itemsMobile: false
+            });
+
+        });
+    </script>
+    <!--/Script for worked profile page-->
+    <!--Script for gradient icon in general menu-->
+    <script type="text/javascript">
+        $(function () {
+                        "use strict";
+            $(".gradientmenu").pxgradient({
+                step: 10,
+                colors: ["#fdfeff", "#cfeefa"],
+                dir: "y"
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
