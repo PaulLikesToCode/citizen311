@@ -34,7 +34,6 @@ class SigninForm(forms.ModelForm):
 
 #Users comments form:
 class CommentsForm(forms.Form):
-    complaints = forms.CharField()
     comments = forms.CharField(widget=forms.Textarea)
 
 #Look up a specific case:
@@ -47,6 +46,6 @@ class LookupForm(forms.ModelForm):
 class SubmitForm(forms.Form):
     category = forms.CharField()
     address = forms.CharField()
+    comments = forms.CharField(widget=forms.Textarea)
     latitude = forms.CharField()
     longitude = forms.CharField()
-    comments = forms.CharField(widget=forms.Textarea)

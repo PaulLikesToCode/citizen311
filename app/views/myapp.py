@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from app.models import Complaints, Comments
 from django.shortcuts import render, redirect, render_to_response
 from app.forms import SigninForm, SignupConfirmForm, CommentsForm, LookupForm, SubmitForm
@@ -11,7 +11,9 @@ from django import forms
 
 # Function for new users to sign up:
 def signup(request):
-    if request.method == "POST":
+    print 'SIGNUP!!!!!!!!!!!!!!!!!'
+    print request.session['currentUrl']
+    if request.method == "POST" and 'buttonform1' in request.POST:
         form = SignupConfirmForm(request.POST)
         if form.is_valid():
             user = User.objects.create_user(
@@ -20,9 +22,23 @@ def signup(request):
                 form.cleaned_data["password"],
             )
         return HttpResponse('Thanks for signing up.')
+    elif request.method == "POST" and 'buttonform2' in request.POST:
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(username=username, password=password)
+            if user is not None and user.is_active:
+                auth.login(request, user)
+                return HttpResponseRedirect (request.session['currentUrl'])
+            else:
+                return HttpResponse("Your username and password do not match.")
     else:
-        form = SignupConfirmForm()
-        return render(request, 'signup.html', {'form': form})
+        form1 = SignupConfirmForm()
+        form2 = SigninForm()
+        data = {
+            'form1': form1,
+            'form2': form2,
+        }
+        return render(request, 'signup.html', data)
 
 #Let a user sign in:
 def login(request):
@@ -32,17 +48,17 @@ def login(request):
         user = authenticate(username=username, password=password)
         if user is not None and user.is_active:
             auth.login(request, user)
-            return redirect("comments")
+            return HttpResponseRedirect("return_url")
         else:
             return HttpResponse("Your username and password do not match.")
     else:
         form = SigninForm()
-        return render(request, 'login.html', {'form':form})
+        return render(request, 'signup.html', {'form':form})
 
 #Let a user sign out:
 def logout_views(request):
     logout(request)
-    return HttpResponse('Thanks for logging out')
+    return HttpResponseRedirect('/')
 
 # Get all case reports:
 def reports(request):
@@ -78,13 +94,13 @@ def about(request):
 #Complaint submit function:
 def submit(request):
     if not request.user.is_authenticated():
-        return HttpResponse("You need to be signed in first.")
+        return HttpResponseRedirect('/signup')
     if request.method == "POST":
         form = SubmitForm(request.POST)
         if form.is_valid():
             address = form.cleaned_data['address']
-            latitude = form.cleaned_data['lat']
-            longitude = form.cleaned_data['lng']
+            latitude = form.cleaned_data['latitude']
+            longitude = form.cleaned_data['longitude']
             category=form.cleaned_data['category']
             comments=form.cleaned_data['comments']
             total_id = Complaints.objects.count()
@@ -106,7 +122,7 @@ def submit(request):
                                     comments_created_date=comments_created_date,
                                     user_id=user_id,
                                     complaints_id=new_id)
-        return HttpResponse("Thank you for submitting a complaint.")
+        return HttpResponseRedirect('/')
 
     else:
         form = SubmitForm()
@@ -139,6 +155,7 @@ def lookup(request):
         return render(request, 'lookup.html', data)
 
 #User sends a comment:
+"""
 def comments(request):
     if not request.user.is_authenticated():
         return HttpResponse("You need to be signed in first.")
@@ -147,19 +164,22 @@ def comments(request):
             form = CommentsForm(request.POST)
             if form.is_valid():
                 print "form is valid"
+                url = HttpRequest.get_full_path()
+                print url
                 user_id = request.user.id
                 complaint_id = form.cleaned_data['complaints']
                 comments = form.cleaned_data['comments']
                 ThisComment = Comments(user_id=user_id, comments=comments, complaints_id=complaint_id)
 #                ThisComment = Comments(user=request.user, complaints=complaint, comments=comments)
                 ThisComment.save()
-            return HttpResponse("Thank you for your input.")
+            return HttpResponse(request, url)
         else:
             form = CommentsForm()
             data = {
                 "form":form
             }
             return render(request, 'comments.html', data)
+"""
 
 #Get all data for map markers:
 def markers_info(request):
@@ -173,11 +193,35 @@ def markers_info(request):
     return render(request, 'markers-info.html', { 'json': json })
 
 def lookup_report(request, id):
-    complaint = Complaints.objects.get(id=id)
-    data = {
-        'complaint': complaint,
-    }
-    return render(request, "lookup.html", data)
+    if request.method == "POST":
+        form = CommentsForm(request.POST)
+        if form.is_valid():
+            complaint = Complaints.objects.get(id=id)
+            print "form is valid"
+            user_id = request.user.id
+            complaint_id = complaint.id
+            comments = form.cleaned_data['comments']
+            ThisComment = Comments(user_id=user_id, comments=comments, complaints_id=complaint_id)
+    #                ThisComment = Comments(user=request.user, complaints=complaint, comments=comments)
+            ThisComment.save()
+        complaint = Complaints.objects.get(id=id)
+        form = CommentsForm()
+        data = {
+            'complaint': complaint,
+            'form': form,
+        }
+        return render(request, "lookup.html", data)
+    else:
+        currentUrl = request.get_full_path()
+        request.session['currentUrl'] = currentUrl
+        print request.session['currentUrl']
+        complaint = Complaints.objects.get(id=id)
+        form = CommentsForm()
+        data = {
+            'complaint': complaint,
+            'form': form,
+        }
+        return render(request, "lookup.html", data)
 
 
 

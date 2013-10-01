@@ -8,6 +8,8 @@
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet" media="screen">
     <link href="{% static "css/main.css" %}"rel="stylesheet" media="screen">
     <link rel="stylesheet" href="{% static "css/whhg.css" %}">
+    <script type="text/javascript" src= "{% static "js/map.js" %}"></script>
+    <script type="text/javascript" src= "{%  static "js/jQueryv2.0.3.js" %}"></script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]> <script src="../../assets/js/html5shiv.js"></script> <script src="../../assets/js/respond.min.js"></script> <![endif]-->
 </head>
@@ -53,13 +55,12 @@
     <div id="map_canvas" class="map"></div>
     <!--/map-->
         <!--Content-->
-        <div class="col-md-11 general_content_styles vcard" id="cont">
+        <div style="max-width: 500px" class="col-md-11 general_content_styles vcard" id="cont">
             <!--header-->
             <div class="row">
                 <div class="col-md-12 header">
                     <div class="logo">
-                        <a href="start.html">
-                            <img src="img/logo.png" alt="..."/></a>
+                        <a href="/"><h1>citizen311</h1></a>
                     </div>
 
                 </div>
@@ -76,34 +77,30 @@
                 <div class="col-md-12 point_description">
                     <div class="row">
                         <div class="col-md-6">
-                            <img src="img/icon/01.png" class="point"  alt="..."/>
+                            <h1>Details</h1>
+                            <h2>{{ complaint.category }}</h2>
                             <h2>{{ complaint.request_details }}</h2>
-                        </div>
-                        <div class="col-md-6 btns">
-                            <a href="" class="btn btn-default btn-sm buttons_head"><i class="icon-user"></i>Invite a friend</a>
-                            <a href="" class="btn btn-danger btn-sm buttons_head"><i class="icon-automobile-car"></i></a>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <span class="descr_text">{{ complaint.address }}</span>
+                            <span class="descr_text">{{ complaint.neighborhood }}: {{ complaint.address }}</span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 placeholder">
-                            <img src="img/placeholder1.png" alt="...">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
+                            This project's status is {{ complaint.status }}. It was opened on {{ complaint.opened }} and last updated on {{ complaint.updated }}. Its case id number is
+                            {{ complaint.case_id }} and is in supervisor district number {{ complaint.supervisor_district }}.
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <ul id="tabs_point">
-                                <li><a href="#" class="active">Comments <span></span></a></li>
+                                <li><a href="" class="active">Comments <span></span></a></li>
                             </ul>
                         </div>
                     </div>
@@ -113,26 +110,41 @@
                                 <div id="point_tab1" class="tab_point_decr active">
                                     <!--Comment-->
                                     <ul>
-                                        {% for i in complaint %}
-                                        <div>{{ username.complaint }}</div>
-                                        <div>{{ username. }}</div>
-
-
-                                    </ul>
-                                    <div class="row comm">
-                                        <div class="col-md-12 comment">
-                                            <img src="img/no_ava.png" alt="..."><div class="infocomment">
-                                                <div><span>{{ comment.username }}</span><span>{{ comment. }}</span></div>
-                                                <div class="rating">
-                                                    <img src="img/start.gif" alt="..."><a href="" class="btn-default btn-rouned">+</a><a href="" class="btn-default btn-rouned">-</a>
+                                        {% for comment in complaint.comments.all %}
+                                        <li style="list-style-type: none">
+                                            <div class="row comm">
+                                                <div class="col-md-12 comment">
+                                                    <span>{{ comment.user }}</span><span>{{ comment.comments_created_date }}</span>
+                                                    <div class="infocomment">
+                                                        <div><span>{{ comment.comments }}</span><span></span></div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also </span>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                    <!--/Comment-->
+                                    {% if user.is_authenticated %}
+                                    <div>
+                                        <p>Add your comment below.</p>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <div class="formWrapper">
+                                            <form action="" method='POST'>{% csrf_token %}
+                                                    <label for="id_comments"></label>
+                                                    {{ form.comments }}
+                                                <br/>
+                                                <input class="btn btn-danger btn-sm" type="submit" name="submit" value="submit" />
+                                            </form>
                                         </div>
                                     </div>
-                                    <!--/Comment-->
-
-                                    <a href="@" class="btn btn-danger btn-sm">Add comment</a>
+                                    {% else %}
+                                    <div>
+                                        <p>Sign in to comment.</p>
+                                        <a id="signInButton" href="/signup" class="btn btn-primary btn-sm pd-top">Sign up or log in</a>
+                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -151,11 +163,17 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src=" {% static "js/bootstrap.js" %}"></script>
-    <!--Google maps API linl-->
+    <!--Google maps API link-->
 
-    <script type="text/javascript" src= "http://maps.googleapis.com/maps/api/js?key=AIzaSyCsbzuJDUEOoq-jS1HO-LUXW4qo0gW9FNs&sensor=false"></script>
+    <script type="text/javascript" src= "http://maps.googleapis.com/maps/api/js?key=AIzaSyB31mjMaXNA33VUKwCndXANCkbgULTyY2k&sensor=false">
+    </script>
     <!--Your map settings script-->
     <script type="text/javascript" src= "{% static "js/map.js" %}"></script>
+    <script type="text/javascript">
+        var lat = ({{ complaint.latitude }});
+        var lng = ({{ complaint.longitude }});
+        drawMap(lat,lng);
+    </script>
     <!--jQuery-->
         <script type="text/javascript" src= "{%  static "js/jQueryv2.0.3.js" %}"></script>
     <script type="text/javascript" src="{% static "js/pxgradient-1.0.2.jquery.js" %}"></script>
@@ -248,6 +266,10 @@
                 dir: "y"
             });
         });
+    </script>
+    <script>
+
+
     </script>
 </body>
 </html>

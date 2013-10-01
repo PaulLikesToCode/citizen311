@@ -1,8 +1,225 @@
-{% extends '_template.html' %}
-{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bootstrap 101 Template </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    {% load staticfiles %}
+    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet" media="screen">
+    <link href="{% static "css/main.css" %}" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href= "{% static "css/whhg.css" %}">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]> <script src="../../assets/js/html5shiv.js"></script> <script src="../../assets/js/respond.min.js"></script> <![endif]-->
+</head>
+<body onload="getDynamicMap()">
+    <!--autorization modal-->
+      <a href="#" class="btn btn-danger btn-sm btm-zindex none" id="Show_cont">Show content</a>
+    <div class="modal fade" id="autorization">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Autorization</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" />
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" />
+                                Check me out
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Sign in</button>
+                    <button type="button" class="btn btn-primary btn-sm">Create account</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <!--map-->
+    <div id="map_canvas" class="map"></div>
+    <!--/map-->
+
+        <!--Content-->
+        <div style="margin-left:100px"class="col-md-11 side-bar" id="cont">
+            <!--header-->
+            <div class="row">
+                <div class="col-md-12 header">
+                    <div class="logo">
+                        <a href="start.html">
+                            <!--img src="img/logo.png" alt="..."/--></a>
+                    </div>
+                </div>
+            </div>
+            <!--/header-->
+             <!--Map open (for adaptive)-->
+            <div class="row map_open">
+                <div class="col-md-12">
+                    <a href="#" id="map_open">Show map</a>
+                </div>
+            </div>
+              <!--/Map open (for adaptive)-->
+            <!--Category menu-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="tabs">
+                        <div id="tab1" class="active tab">
+                            <h5 class="cat">Sign up</h5>
+                            <form method="POST">{% csrf_token %}
+                                {{ form1.as_p }}
+                                {{ confirm_form1.as_p }}
+                                <input type="submit" name="buttonform1" value="submit" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/Category menu-->
+        </div>
+    </div>
+        <div style="margin-right:100px"class="col-md-11 side-bar" id="cont">
+            <!--header-->
+            <div class="row">
+                <div class="col-md-12 header">
+                    <div class="logo">
+                        <a href="start.html">
+                            <!--img src="img/logo.png" alt="..."/--></a>
+                    </div>
+                </div>
+            </div>
+            <!--/header-->
+            <!--Category menu-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="tabs">
+                        <div id="tab1" class="active tab">
+                            <h5 class="cat">Log in</h5>
+                            <form method="POST">{% csrf_token %}
+                                {{ form2.as_p }}
+                                <input type="submit" name="buttonform2" value="submit" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/Category menu-->
+        </div>
+        <!--/Content-->
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{% static "js/jQueryv2.0.3.js" %}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static "js/bootstrap.js" %}"></script>
+    <!--Google maps API linl-->
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB31mjMaXNA33VUKwCndXANCkbgULTyY2k&sensor=false"></script>
+    <!--Your map settings script-->
+    <script>
+        function getDynamicMap(position) {
+            var mapOptions = {
+                center: new google.maps.LatLng(37.797677,-122.394339),
+                zoom: 12,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+        }
+        google.maps.event.addDomListener(window, 'load', getDynamicMap);
+    </script>
+    <script type="text/javascript" src="{% static "js/map.js" %}"></script>
+    <!--jQuery-->
+        <script type="text/javascript" src="{% static "js/jQueryv2.0.3.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/pxgradient-1.0.2.jquery.js" %}"></script>
+    <!--Script for worked left smile categoryes menu-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+                        "use strict";
+            $(".inner ul li a").each(function (i) {
+                $(".inner ul li a:eq(" + i + ")").click(function () {
+                    var tab_id = i + 1;
+                    $(".inner ul li a").removeClass("active");
+                    $("#tabs .active").removeClass("active");
+                    $(this).addClass("active");
+                    $("#tabs div").stop(false, false).hide();
+                    $("#tab" + tab_id).stop(false, false).show();
+                    return false;
+                })
+            })
+        })
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+                        "use strict";
+            $("#tabs_point li a").each(function (i) {
+                $("#tabs_point li a:eq(" + i + ")").click(function () {
+                    var tab_id = i + 1;
+                    $("#tabs_point li a").removeClass("active");
+                    $(".tabs_block_point .active").removeClass("active");
+                    $(this).addClass("active");
+                    $(".tabs_block_point div").stop(false, false).hide();
+                    $("#point_tab" + tab_id).stop(false, false).show();
+                    return false;
+                })
+            })
+        })
+    </script>
+    <!--/Script for worked left smile categoryes menu-->
+    <!--Script for worked profile page-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+                        "use strict";
+            $('#link_open').on('click', function () {
+                if ($('#link_open').hasClass("clooses")) {
+                    $("#open_span").removeClass("close_span").addClass("open_span");
+                    $("#profile").removeClass("profile_closed");
+                    $("#link_open").removeClass("clooses");
+                    $("#cont").addClass("none");
+                }
+                else {
+                    $("#open_span").addClass("close_span").removeClass("open_span");
+                    $("#profile").addClass("profile_closed");
+                    $("#link_open").addClass("clooses");
+                    $("#cont").removeClass("none");
+                }
+            })
+              $('#map_open').on('click', function () {
+                            "use strict";
+            $("#cont").addClass("none");
+            $("#Show_cont").removeClass("none");
+
+        })
+        $('#Show_cont').on('click', function () {
+                        "use strict";
+            $("#cont").removeClass("none");
+        })
+        });
+    </script>
+    <!--/Script for worked profile page-->
+    <!--Script for gradient icon in general menu-->
+    <script type="text/javascript">
+        $(function () {
+                        "use strict";
+            $(".gradientmenu").pxgradient({
+                step: 10,
+                colors: ["#fdfeff", "#cfeefa"],
+                dir: "y"
+            });
+        });
+    </script>
+</body>
+</html>
+
 <form method="POST">
     {{ form.as_p }}
     {{ confirm_form.as_p }}
         <input type="submit" name="submit" value="submit" />
 </form>
-{% endblock %}

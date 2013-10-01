@@ -1,4 +1,14 @@
-﻿* {
+﻿#id_latitude, #id_longitude {
+    display: none;
+    visibility: hidden;
+    color:red;
+}
+
+li input {
+    visibility: hidden;
+}
+
+* {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
@@ -379,7 +389,7 @@ height: 100%;
         list-style: none;
     }
 
-        .catalog li a {
+        .catalog li a, .catalog li label {
             color: #5d8eae;
             padding: 8px 10px;
             border-bottom: 1px solid #e7e7e7;
@@ -389,7 +399,7 @@ height: 100%;
             width: 100%;
         }
 
-            .catalog li a:hover {
+            .catalog li a:hover, .catalog li label:hover {
                 color: #5d8eae;
                 padding: 8px 10px;
                 border-bottom: 1px solid #e7e7e7;
@@ -400,12 +410,22 @@ height: 100%;
                 width: 100%;
             }
 
-        .catalog li span {
+/*        .catalog li span {
             float: right;
             color: #c8c8c8;
             font-size: 9px;
             padding: 3px;
         }
+*/
+#checkboxes {
+            color: #5d8eae;
+            padding: 8px 10px;
+            border-bottom: 1px solid #e7e7e7;
+            font-weight: normal;
+            display: block;
+            float: left;
+            width: 100%;
+}
 
     .catalog .activepoint, .catalog .activepoint:hover {
         background: #f16d52; /* Old browsers */
@@ -1012,7 +1032,7 @@ left: 100px;}
     .general_menu {position: absolute; min-height: 100%;}
 
 }
-
+*/
 
 
 

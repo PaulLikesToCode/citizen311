@@ -31,15 +31,3 @@ class Comments(models.Model):
 
 #    def __unicode__(self):
 #       return self.address
-
-"""
-class User(models.Model):
-    username = models.CharField(max_length=255)
-    firstname = models.CharField(max_length=255)
-    lastname = models.CharField(max_length=255, null=True)
-    password = models.CharField(max_length=255)
-    date_created = models.DateTimeField(null=True)
-
-    class Meta:
-        app_label="app"
-"""
