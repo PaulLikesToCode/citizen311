@@ -21,14 +21,17 @@ def signup(request):
                 form.cleaned_data["email"],
                 form.cleaned_data["password"],
             )
-        return HttpResponse('Thanks for signing up.')
+            thisUser = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+        if thisUser is not None and thisUser.is_active:
+            auth.login(request, thisUser)
+            return HttpResponseRedirect(request.session['currentUrl'])
     elif request.method == "POST" and 'buttonform2' in request.POST:
             username = request.POST['username']
             password = request.POST['password']
             user = authenticate(username=username, password=password)
             if user is not None and user.is_active:
                 auth.login(request, user)
-                return HttpResponseRedirect (request.session['currentUrl'])
+                return HttpResponseRedirect(request.session['currentUrl'])
             else:
                 return HttpResponse("Your username and password do not match.")
     else:

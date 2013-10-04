@@ -34,57 +34,133 @@
                 <div class="col-md-12">
                     <div id="tabs">
                         <div id="tab1" class="active tab">
-                            <h5 class="cat">Narrow down your search.</h5>
+                            <h5 class="cat">Narrow down your search by type...</h5>
                             <ul class="catalog">
                                 <li>
-                                    <label class="checkboxes" for="cleaning">Street and Sidewalk Cleaning</label>
-                                    <input type="checkbox" name="Street and Sidewalk Cleaning" id="cleaning" value="cleaning">
+                                    <span class='checkboxes-span category' name="Street and Sidewalk Cleaning">Street and Sidewalk Cleaning</span>
                                 </li>
                                 <li>
-                                    <label class="checkboxes" for="graffiti">Graffiti</label>
-                                    <input type="checkbox" name="Graffiti Private Property" id="graffiti" value="graffiti">
+                                    <span class='checkboxes-span category' name="Graffiti Private Property">Graffiti</span>
                                 </li>
                                 <li>
-                                    <label class="checkboxes" for="litter">Litter Receptacles</label>
-                                    <input type="checkbox" name="Litter Receptacles" id="litter" value="litter">
+                                    <span class='checkboxes-span category' name="Litter Receptacles">Litter Receptacles</span>
                                 </li>
                                 <li>
-                                    <label class="checkboxes" for="tree">Tree Maintenance</label>
-                                    <input type="checkbox" name="Tree Maintenance" id="tree" value="tree">
+                                    <span class='checkboxes-span category' name="Tree Maintenance">Tree Maintenance</span>
                                 </li>
                                 <li>
-                                    <label class="checkboxes" for="streetlights">Streetlights</label>
-                                    <input type="checkbox" name="Streetlights" id="streetlights" value="streetlights">
+                                    <span class='checkboxes-span category' name="Streetlights">Streetlights</span>
                                 </li>
                                 <li>
-                                    <label class="checkboxes" for="sewer">Sewer Issues</label>
-                                    <input type="checkbox" name="Sewer Issues" id="sewer" value="sewer">
+                                    <span class='checkboxes-span category' name="Sewer Issues">Sewer Issues</span>
                                 </li>
                                 <li>
-                                    <label class="checkboxes" for="sign">Sign Repair</label>
-                                    <input type="checkbox" name="Sign Repair" id="sign" value="sign">
+                                    <span class='checkboxes-span category' name="Sign Repair">Sign Repair</span>
                                 </li>
                                 <li>
-                                    <label class="checkboxes" for="street">Street Defects</label>
-                                    <input type="checkbox" name="Street Defects" id="street" value="street">
+                                    <span class='checkboxes-span category' name="Street Defects">Street Defects</span>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
+            <!--Search by neighborhood-->
+            <div>
+                <div id="tab2" class="active tab">
+                    <h5 class="cat">...or by neighborhood.</h5>
+                    <ul class="catalog">
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Alamo Square">Alamo Square</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Bayview">Bayview</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Bernal Heights">Bernal Heights</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Castro/Upper Market">Castro/Upper Market</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Downtown/Tenderloin">Downtown/Tenderloin</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Eureka Valley/Dolores Heights">Eureka Valley/Dolores Heights</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Excelsior">Excelsior</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Financial District">Financial District</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Glen Park">Glen Park</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Haight Ashbury">Haight Ashbury</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Hayes Valley">Hayes Valley</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Mission">Mission</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Nob Hill">Nob Hill</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Noe Valley">Noe Valley</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="North Beach">North Beach</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Pacific Heights">Pacific Heights</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Portola">Portola</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Potrero Hill">Potrero Hill</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Russian Hill">Russian Hill</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="South of Market">South of Market</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Twin Peaks">Twin Peaks</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Van Ness/Civic Center">Van Ness/Civic Center</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Visitacion Valley">Visitacion Valley</span>
+                        </li>
+
+                        {% for i in neighborhood_info %}{% ifchanged %}
+                                <!--li>
+                                    <span class='checkboxes-span' name="{{ i.neighborhood }}">{{ i.neighborhood }}</span>
+                                </li-->
+                        {% endifchanged %}{% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <!--/Search by neighborhood-->
             <!--/Category menu-->
             <!--Search-->
             <div class="row search_inner_box">
                 <div class="col-md-12">
                     {% if user.is_authenticated %}
-                    <span style="color:orange">Don't see it? Report it.</span>
+                    <span class='sendReport'>Don't see it? Report it.</span>
                     <br/>
                     <a href="submit" class="btn btn-danger btn-sm pd-top">Report</a>
                     <br/>
                     <a href="logout" class="btn btn-danger btn-sm pd-top">Log out</a>
                     {% else %}
-                    <span style="color:orange">Don't see it? Sign in or sign up to report it.</span>
+                    <span class="sendReport">Don't see it? Sign in or sign up to report it.</span>
                     <br/>
                     <a id="signInButton" href="signup" class="btn btn-primary btn-sm pd-top">Sign up or log in</a>
                     {% endif %}
@@ -98,6 +174,7 @@
     <script src="{% static "js/jQueryv2.0.3.js" %}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{% static "js/bootstrap.js" %}"></script>
+    <script src="{% static "js/underscore.js" %}"></script>
     <!--Google maps API linl-->
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB31mjMaXNA33VUKwCndXANCkbgULTyY2k&sensor=false"></script>
     <!--Your map settings script-->
@@ -113,16 +190,23 @@
         var category;
 {#        var customInfo;#}
 {#        var map;#}
+        var clickedMarkers = [];
+        var neighborhood;
         var markersSelected = [];
         var markersData = [];
         var categoryList = [];
+        var neighborhoodList = [];
         var curCategory = '';
         var markerObj = {};
+        var allMarkers = [];
+        var Lat = 37.766396;
+        var Lng = -122.452927;
+        var zoom = 13;
 // Trying out new way to draw the map and markers:
         function getDynamicMap() {
-            var center = new google.maps.LatLng(37.766396,-122.452927);
+            var center = new google.maps.LatLng(Lat,Lng);
             var mapOptions = {
-                zoom: 13,
+                zoom: zoom,
                 center: center,
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 panControl: false,
@@ -146,6 +230,11 @@
                 if ($.inArray(category,categoryList)===-1) {
                     categoryList.push(category);
                     markersObject[category] = [];
+                }
+                var neighborhood = markersData[i].fields.neighborhood;
+                if ($.inArray(neighborhood,neighborhoodList)===-1) {
+                    neighborhoodList.push(neighborhood);
+                    markersObject[neighborhood] = [];
                 }
                 // THIS MARKER OBJECT
                 var markerObj = {
@@ -172,25 +261,22 @@
                     markerObj.infoWindow.setContent(this.title);
                     markerObj.infoWindow.open(map,this);
                 });
-                markersObject[category].push(markerObj);
-            }
-            console.log(categoryList);
-            console.log(markersObject);
-            console.log(markersObject["Tree Maintenance"][3]);
 
+                // GET MAP CENTER AND ZOOM
+                var bound = new google.maps.LatLngBounds();
+                for (i = 0; i < allMarkers.length - 10; i++) {
+                    bound.extend( new google.maps.LatLng(allMarkers[i].latitude,allMarkers[i].longitude));
+                }
+                // PUSH MARKERS DATA TO ARRAYS
+                markersObject[category].push(markerObj);
+                markersObject[neighborhood].push(markerObj);
+                allMarkers.push(markerObj);
+            }
+            console.log(allMarkers);
+            var l = bound.getCenter();
+            console.log(l.lb);
         }
 /*
-        function setMarkers(map) {
-            for (var i = 0; i < markersArray.length; i++) {
-                markersArray[i].setMap(map);
-            }
-        }
-
-        function clearOverlays() {
-            setMarkers(null);
-        }
-*/
-
         function updateCategoryMarker(category,visibleFlag) {
             console.log(category + ' ' + visibleFlag);
             for(i in markersObject[category]) {
@@ -198,106 +284,119 @@
             }
         }
 
+        function updateNeighborhoodMarker(neighborhood,visibleFlag) {
+            console.log(neighborhood + '' + visibleFlag);
+            for(i in markersObject[neighborhood]) {
+                markersObject[neighborhood][i].marker.setVisible(visibleFlag);
+            }
+        }
+
+//Determines which function to show markers
+*/      function showMarkers() {
+            if (category && !neighborhood) {
+                selectCategory(category);
+            } else if (neighborhood && !category) {
+                selectNeighorhood(neighborhood);
+            } else {
+                selectNeighborhoodCategory(neighborhood, category);
+            }
+        }
+//Shows just category
+        function selectCategory(category){
+            for (var i in allMarkers) {
+                allMarkers[i].marker.setVisible(false);
+            }
+            clickedMarkers = _.where(allMarkers, {category:category});
+            for (j in clickedMarkers) {
+                clickedMarkers[j].marker.setVisible(true);
+            }
+        }
+//Shows just neighborhood
+        function selectNeighorhood(neighborhood) {
+            for (var i in allMarkers) {
+                allMarkers[i].marker.setVisible(false);
+            }
+            clickedMarkers = _.where(allMarkers, {neighborhood:neighborhood});
+            for (j in clickedMarkers) {
+                clickedMarkers[j].marker.setVisible(true);
+            }
+        }
+//Shows both category and neighborhood
+        function selectNeighborhoodCategory(neighborhood, category) {
+            for (var i in allMarkers) {
+                allMarkers[i].marker.setVisible(false);
+            }
+            clickedMarkers = _.where(allMarkers, {neighborhood:neighborhood, category:category});
+            for (j in clickedMarkers) {
+                clickedMarkers[ j].marker.setVisible(true);
+            }
+        }
+
+
+
+
+//Selects either category or neighborhood
+
+
         $(document).ready(function() {
-            $(".catalog input[type=checkbox]").on('click',function() {
-                category = $(this).attr("name")
-                console.log(category);
-                for(i in categoryList) {
+            $('span.category').on('click',function() {
+                category = $(this).attr("name");
+                $('li span.category').removeClass("clicked");
+                $(this).addClass("clicked");
+                showMarkers();
+            })
+            $('span.neighborhood').on('click',function() {
+                neighborhood = $(this).attr("name");
+                $('li span.neighborhood').removeClass("clicked");
+                $(this).addClass("clicked");
+                showMarkers();
+            })
+        });
+//.catalog input[type=checkbox]
+//Turning categories on and off
+/*        $(document).ready(function() {
+            $("span.category").on('click',function() {
+                category = $(this).attr("name");
+                for(var i in categoryList) {
                     if (categoryList[i] === category) {
                         updateCategoryMarker(categoryList[i],true);
+                        $('li span').removeClass("clicked");
+                        $(this).addClass("clicked");
                     } else {
                         updateCategoryMarker(categoryList[i],false);
                     }
                 }
-                /*
-                for (i in markersObject[cat]) {
-                    console.log('for');
-
-                    if (markersObject[i].marker.category === cat) {
-                        console.log('if');
-                        markerObj.marker.setVisible(true);
-                    }
-                    else {
-                        console.log('else');
-                        markersObject[category][i].setVisible(false);
-                    }
-                }
-                */
             });
         });
 
-        google.maps.event.addDomListener(window, 'load', getDynamicMap);
-
-
-//Old way to do the map and markers.
-/*        function getDynamicMap(position) {
-            var mapOptions = {
-                center: new google.maps.LatLng(37.797677,-122.394339),
-                zoom: 14,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            }
-            map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
-            for (var i in markersJson) {
-                var lat = markersJson[i].fields.latitude;
-                var lng = markersJson[i].fields.longitude;
-                var address = markersJson[i].fields.address;
-                var case_id = markersJson[i].fields.case_id;
-                var category = markersJson[i].fields.category;
-                var id = markersJson[i].pk;
-                var comment = markersJson[i].fields.comments;
-                var customInfo = '<a href="/lookup/'+id+'">'+category+'</a>';
-                //var customInfo = '<a href="http://bootcamp.rocketu.com/exercises/project/reports-page.html$'+complaints[id].case_id+'">'+complaints[id].case_id+'</a>';
-                var infoWindow = new google.maps.InfoWindow({
-                    content: customInfo
-                });
-                var	marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(lat,lng),
-                    map: map,
-                    title: customInfo
-                   });
-                markersArray.push(marker);
-                marker.setMap(map);
-                google.maps.event.addListener(marker, 'click', function() {
-                    console.log(this.title);
-                    infoWindow.setContent(this.title);
-                    infoWindow.open(map,this);
-                });
-            }
-            markersArray.setMap(map);
-        }
-
-        function selectCategory() {
-            $("li").on('click',function() {
-                if (markersArray && markers.length) {
-                    console.log('hide');
-                    for (var i = 0; i < markersArray.length;, i++) {
-                        markersArray[i].setMap(null);
+//Turning neighborhoods on and off
+        $(document).ready(function() {
+            $('span.neighborhood').on('click',function() {
+                neighborhood = $(this).attr('name');
+                for (var j in neighborhoodList[j] === neighborhood) {
+                    console.log(neighborhood);
+                    if (neighborhoodList[j] === neighborhood) {
+                        updateNeighborhoodMarker(neighborhoodList[j],true);
+                        $('li span').removeClass("clicked");
+                        $(this).addClass("clicked");
+                        console.log('neighborhood');
+                    } else {
+                        updateNeighborhoodMarker(neighborhoodList[j],false)
                     }
                 }
             });
-        }
-
+        });
+*/
         google.maps.event.addDomListener(window, 'load', getDynamicMap);
 
-        function fillCommentsBox(pk) {
-            localStorage.id = pk + 1;
-            localStorage.address = address;
-            localStorage.category = category;
-            localStorage.opened = markers[pk].fields.opened;
-            localStorage.lat = lat;
-            localStorage.lng = lng;
-            $('#opened').html(markers[pk].fields.opened);
-            $('#status').html(markers[pk].fields.status);
-            $('#category').html(markers[pk].fields.category);
-            $('#address').html(markers[pk].fields.address);
-        }
-*/
+
+
     </script>
     <script type="text/javascript" src="{% static "js/map.js" %}"></script>
     <!--jQuery-->
         <script type="text/javascript" src="{% static "js/jQueryv2.0.3.js" %}"></script>
     <script type="text/javascript" src="{% static "js/pxgradient-1.0.2.jquery.js" %}"></script>
-    <!--Script for worked left smile categoryes menu-->
+    <!--Script for worked left smile categories menu-->
     <script type="text/javascript">
         $(document).ready(function () {
                         "use strict";
@@ -317,7 +416,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
                         "use strict";
-            $("#tabs_point li a").each(function (i) {
+            $("#tabs1 ul li").each(function (i) {
                 $("#tabs_point li a:eq(" + i + ")").click(function () {
                     var tab_id = i + 1;
                     $("#tabs_point li a").removeClass("active");

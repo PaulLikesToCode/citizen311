@@ -6,8 +6,8 @@
 
 li input {
     visibility: hidden;
+    display: none;
 }
-
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -276,7 +276,7 @@ height: 100%;
 
 /*sidebar*/
 .side-bar {
-    background: #ffffff;
+    background: rgba(255, 255, 255, .95);
     margin-left: 50px;
     max-width: 240px;
     border-right: 1px solid #d3d3d3;
@@ -389,25 +389,29 @@ height: 100%;
         list-style: none;
     }
 
-        .catalog li a, .catalog li label {
+        .catalog li a, .catalog li label, li span.checkboxes-span {
             color: #5d8eae;
-            padding: 8px 10px;
+            padding: 2px 5px;
             border-bottom: 1px solid #e7e7e7;
+            margin-bottom: 2px;
             font-weight: normal;
             display: block;
             float: left;
             width: 100%;
+            cursor:default;
         }
 
-            .catalog li a:hover, .catalog li label:hover {
+            .catalog li a:hover, .catalog li label:hover, li span.checkboxes-span:hover {
                 color: #5d8eae;
                 padding: 8px 10px;
+                margin-bottom: 2px;
                 border-bottom: 1px solid #e7e7e7;
                 font-weight: normal;
                 background: #eef8ff;
                 display: block;
                 float: left;
                 width: 100%;
+                cursor: default;
             }
 
 /*        .catalog li span {
@@ -417,9 +421,9 @@ height: 100%;
             padding: 3px;
         }
 */
-#checkboxes {
+#checkboxes, li span.checkboxes-span {
             color: #5d8eae;
-            padding: 8px 10px;
+            padding: 2px 5px;
             border-bottom: 1px solid #e7e7e7;
             font-weight: normal;
             display: block;
@@ -1034,14 +1038,22 @@ left: 100px;}
 }
 */
 
+span.sendReport {
+    color: rgb(234, 74, 56);
+}
 
-
-
-
-
-
-
-
+li span.clicked {
+                color: #5d8eae;
+                padding: 8px 10px;
+                margin-bottom: 2px;
+                border-bottom: 1px solid #e7e7e7;
+                font-weight: 500;
+                background: #eef8ff;
+                display: block;
+                float: left;
+                width: 100%;
+                cursor: default;
+            }
 
 
 

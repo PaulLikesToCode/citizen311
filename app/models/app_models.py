@@ -21,6 +21,7 @@ class Complaints(models.Model):
 class Comments(models.Model):
     complaints = models.ForeignKey(Complaints, related_name="comments")
     user = models.ForeignKey(User)
+    case_id = models.CharField(null=True, max_length=255)
     comments_date = models.DateTimeField(null=True, auto_now_add=True)
     comments_created_date = models.DateTimeField(null=True, auto_now=True)
     comments = models.TextField(blank=True)

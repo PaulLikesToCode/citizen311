@@ -57,8 +57,7 @@
             <div class="row">
                 <div class="col-md-12 header">
                     <div class="logo">
-                        <a href="start.html">
-                            <!--img src="img/logo.png" alt="..."/--></a>
+                    <a href="/"><h1>citizen311</h1></a>
                     </div>
                 </div>
             </div>
@@ -71,43 +70,23 @@
             </div>
               <!--/Map open (for adaptive)-->
             <!--Category menu-->
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="tabs">
-                        <div id="tab1" class="active tab">
-                            <h5 class="cat">Sign up</h5>
-                            <form method="POST">{% csrf_token %}
-                                {{ form1.as_p }}
-                                {{ confirm_form1.as_p }}
-                                <input type="submit" name="buttonform1" value="submit" />
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--/Category menu-->
-        </div>
-    </div>
-        <div style="margin-right:100px"class="col-md-11 side-bar" id="cont">
-            <!--header-->
-            <div class="row">
-                <div class="col-md-12 header">
-                    <div class="logo">
-                        <a href="start.html">
-                            <!--img src="img/logo.png" alt="..."/--></a>
-                    </div>
-                </div>
-            </div>
-            <!--/header-->
-            <!--Category menu-->
-            <div class="row">
+            <div "class="row">
                 <div class="col-md-12">
                     <div id="tabs">
                         <div id="tab1" class="active tab">
                             <h5 class="cat">Log in</h5>
                             <form method="POST">{% csrf_token %}
                                 {{ form2.as_p }}
-                                <input type="submit" name="buttonform2" value="submit" />
+                                <input class="btn btn-danger btn-sm" type="submit" name="buttonform2" value="Submit" />
+                            </form>
+                            <br/>
+                        </div>
+                        <div id="tab1" class="active tab">
+                            <h5 class="cat">Sign up</h5>
+                            <form method="POST">{% csrf_token %}
+                                {{ form1.as_p }}
+                                {{ confirm_form1.as_p }}
+                                <input class="btn btn-danger btn-sm" type="submit" name="buttonform1" value="Submit" />
                             </form>
                         </div>
                     </div>
@@ -129,7 +108,29 @@
             var mapOptions = {
                 center: new google.maps.LatLng(37.797677,-122.394339),
                 zoom: 12,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                mapTypeControl: false,
+                mapTypeControlOptions: {
+                    style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                    position: google.maps.ControlPosition.BOTTOM_CENTER
+                    },
+                panControl: false,
+                panControlOptions: {
+                    position: google.maps.ControlPosition.TOP_RIGHT
+                    },
+                zoomControl: true,
+                zoomControlOptions: {
+                    style: google.maps.ZoomControlStyle.LARGE,
+                    position: google.maps.ControlPosition.TOP_RIGHT
+                    },
+                scaleControl: false,
+                scaleControlOptions: {
+                    position: google.maps.ControlPosition.TOP_LEFT
+                    },
+                streetViewControl: true,
+                streetViewControlOptions: {
+                    position: google.maps.ControlPosition.TOP_RIGHT
+                    }
             }
             map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
         }

@@ -26,7 +26,7 @@ function drawMap (lat,lng) {
             },
         streetViewControl: true,
         streetViewControlOptions: {
-            position: google.maps.ControlPosition.LEFT_TOP
+            position: google.maps.ControlPosition.TOP_RIGHT
             }
         }
     map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);

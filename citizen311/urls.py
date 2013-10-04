@@ -21,7 +21,7 @@ urlpatterns = patterns('app.views',
     url(r'^login$', 'myapp.login', name='login'),
     url(r'^lookup$', 'myapp.lookup', name='lookup'),
     url(r'^enter-comments$', 'myapp.comments', name='comments'),
-    url(r'^logout$', 'myapp.logout_views', name='logout_views'),
+    url(r'logout$', 'myapp.logout_views', name='logout_views'),
     url(r'^markers-info', 'myapp.markers_info', name='markers_info'),
     url(r'^api/', include(v1_api.urls)),
     url(r'^lookup/(?P<id>\d+)$', 'myapp.lookup_report', name='lookup_report')
