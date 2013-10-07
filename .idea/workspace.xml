@@ -2,16 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ce24f776-7f10-43e2-b41e-9f4c62082dd0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/app_models.py" afterPath="$PROJECT_DIR$/app/models/app_models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/home.html" afterPath="$PROJECT_DIR$/app/templates/home.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/home.py" afterPath="$PROJECT_DIR$/app/views/home.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/lookup.html" afterPath="$PROJECT_DIR$/app/templates/lookup.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/css/main.css" afterPath="$PROJECT_DIR$/app/static/css/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/js/map.js" afterPath="$PROJECT_DIR$/app/static/js/map.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/myapp.py" afterPath="$PROJECT_DIR$/app/views/myapp.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/signup.html" afterPath="$PROJECT_DIR$/app/templates/signup.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/submit.html" afterPath="$PROJECT_DIR$/app/templates/submit.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/citizen311/urls.py" afterPath="$PROJECT_DIR$/citizen311/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="citizen311.iws" />

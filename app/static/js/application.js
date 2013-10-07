@@ -1,227 +1,194 @@
-var map;
-var marker;
-var customInfo;
-var infoWindow;
+        var markersObject = {};
+        var category;
+        var clickedMarkers = [];
+        var neighborhood;
+        var markersSelected = [];
+        var markersData = [];
+        var categoryList = [];
+        var neighborhoodList = [];
+        var curCategory = '';
+        var markerObj = {};
+        var allMarkers = [];
+        var Lat = 37.766396;
+        var Lng = -122.452927;
+        var zoom = 13;
+// Trying out new way to draw the map and markers:
+        function getDynamicMap() {
+            var center = new google.maps.LatLng(Lat,Lng);
+            var mapOptions = {
+                zoom: zoom,
+                center: center,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                panControl: false,
+                mapTypeControlOptions: {
+                    position: google.maps.ControlPosition.TOP_RIGHT
+                },
+                zoomControl: true,
+                zoomControlOptions: {
+                    style: google.maps.ZoomControlStyle.LARGE,
+                    position: google.maps.ControlPosition.TOP_RIGHT
+                    }
+            };
+            map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+            buildMarkers(markersJson);
+        }
 
-/*function bindInfoWindow(marker, map, infoWindow, customInfo) {
-    google.maps.event.addListener(marker, 'click', function() {
-        infoWindow.setContent(customInfo);
-        infoWindow.open(map, marker);
-    });
-});*/
-/*function drawComplaints() {
-    for (i=0; i < json.length; i++) {
-        var lat = json[i].point.latitude;
-        var lng = json[i].point.longitude;
-        var customInfo = json[i].category;
-        var infoWindow = new google.maps.InfoWindow({
-            content: customInfo
-        });
-        var marker = new google.maps.Marker ({
-            position: new google.maps.LatLng(lat,lng),
-            map: map,
-            title: customInfo
-        });
-        google.maps.event.addListener(marker, 'click', function() {
-            infoWindow.open(map,marker);
-        });
-        console.log('finally');
-    }
-}*/
+        function buildMarkers(markersData) {
+            for (var i in markersData) {
+                // CHECK IF CATEGORY IS IN MASTER CATEGORY LIST
+                var category = markersData[i].fields.category;
+                if ($.inArray(category,categoryList)===-1) {
+                    categoryList.push(category);
+                    markersObject[category] = [];
+                }
+                var neighborhood = markersData[i].fields.neighborhood;
+                if ($.inArray(neighborhood,neighborhoodList)===-1) {
+                    neighborhoodList.push(neighborhood);
+                    markersObject[neighborhood] = [];
+                }
+                // THIS MARKER OBJECT
+                var markerObj = {
+                    id: markersData[i].pk
+                }
+                // COPY MARKER DATA FROM SERIALIZED JSON FIELDS
+                for (var j in markersData[i].fields) {
+                    markerObj[j] = markersData[i].fields[j];
+                }
+                // ADDITIONAL MARKER SETUP
 
-/*function drawComplaints() {
-    for (var id in complaints) {
-        var lat = complaints[id].point.latitude;
-        var lng = complaints[id].point.longitude;
-        var address = complaints[id].address;
-        var customInfo = complaints[id].category;
-        var infoWindow = new google.maps.InfoWindow({
-            content: customInfo
-        });
-        var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(lat,lng),
-            map: map,
-            title: customInfo
-        });
-        google.maps.event.addListener(marker, 'click', function() {
-            infoWindow.open(map,marker);
-        });
-        console.log(address);
-        //bindInfoWindow(marker, map, infoWindow, customInfo);
-    }
-}
-//drawComplaints();
+                markerObj.customInfo = '<a href="/lookup/'+markerObj.id+'">'+markerObj.category+'</a>';
+                markerObj.infoWindow = new google.maps.InfoWindow({
+                    content: markerObj.customInfo
+                });
+                markerObj.marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(markerObj.latitude,markerObj.longitude),
+                    map: map,
+                    title: markerObj.customInfo,
+                    category: markerObj.category
+                   });
+                google.maps.event.addListener(markerObj.marker, 'click', function() {
+                    console.log(this.title);
+                    markerObj.infoWindow.setContent(this.title);
+                    markerObj.infoWindow.open(map,this);
+                });
 
-
-/*Start Facebook here*/
-
-/*$(document).ready(function() {
-    $('#comments').append( Mustache.render( $('#comments-template').html(), comments) );
-});*/
-
+                // GET MAP CENTER AND ZOOM
+                var bound = new google.maps.LatLngBounds();
+                for (i = 0; i < allMarkers.length - 10; i++) {
+                    bound.extend( new google.maps.LatLng(allMarkers[i].latitude,allMarkers[i].longitude));
+                }
+                // PUSH MARKERS DATA TO ARRAYS
+                markersObject[category].push(markerObj);
+                markersObject[neighborhood].push(markerObj);
+                allMarkers.push(markerObj);
+            }
+            console.log(allMarkers);
+            var l = bound.getCenter();
+            console.log(l.lb);
+        }
 /*
-window.fbAsyncInit = function() {
-    FB.init({
-        appId : '146925758848407', // App ID
-        channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel File
-        status : true, // check login status
-        cookie : true, // enable cookies to allow the server to access the session
-        xfbml : true // parse XFBML
-    });
+        function updateCategoryMarker(category,visibleFlag) {
+            console.log(category + ' ' + visibleFlag);
+            for(i in markersObject[category]) {
+                markersObject[category][i].marker.setVisible(visibleFlag);
+            }
+        }
 
-    // Here we subscribe to the auth.authResponseChange JavaScript event. This event is fired
-    // for any authentication related change, such as login, logout or session refresh. This means that
-    // whenever someone who was previously logged out tries to log in again, the correct case below
-    // will be handled.
-    FB.Event.subscribe('auth.authResponseChange', function(response) {
-        // Here we specify what we do with the response anytime this //event occurs.
-        console.log(response);
-        if (response.status === 'connected') {
-            // The response object is returned with a status field that lets the app know the current
-            // login status of the person. In this case, we're handling the situation where they
-            // have logged in to the app.
-            testAPI();
-        } else if (response.status === 'not_authorized') {
-            // In this case, the person is logged into Facebook, but not into the app, so we call
-            // FB.login() to prompt them to do so.
-            // In real-life usage, you wouldn't want to immediately prompt someone to login
-            // like this, for two reasons:
-            // (1) JavaScript created popup windows are blocked by most browsers unless they
-            // result from direct interaction from people using the app (such as a mouse click)
-            // (2) it is a bad experience to be continually prompted to login upon page load.
-            FB.login();
-        } else {
-            // In this case, the person is not logged into Facebook, so we call the login()
-            // function to prompt them to do so. Note that at this stage there is no indication
-            // of whether they are logged into the app. If they aren't then they'll see the Login
-            // dialog right after they log in to Facebook.
-            // The same caveats as above apply to the FB.login() call here.
-            FB.login();
+        function updateNeighborhoodMarker(neighborhood,visibleFlag) {
+            console.log(neighborhood + '' + visibleFlag);
+            for(i in markersObject[neighborhood]) {
+                markersObject[neighborhood][i].marker.setVisible(visibleFlag);
+            }
+        }
+
+//Determines which function to show markers
+*/      function showMarkers() {
+            if (category && !neighborhood) {
+                selectCategory(category);
+            } else if (neighborhood && !category) {
+                selectNeighorhood(neighborhood);
+            } else {
+                selectNeighborhoodCategory(neighborhood, category);
+            }
+        }
+//Shows just category
+        function selectCategory(category){
+            for (var i in allMarkers) {
+                allMarkers[i].marker.setVisible(false);
+            }
+            clickedMarkers = _.where(allMarkers, {category:category});
+            for (j in clickedMarkers) {
+                clickedMarkers[j].marker.setVisible(true);
+            }
+        }
+//Shows just neighborhood
+        function selectNeighorhood(neighborhood) {
+            for (var i in allMarkers) {
+                allMarkers[i].marker.setVisible(false);
+            }
+            clickedMarkers = _.where(allMarkers, {neighborhood:neighborhood});
+            for (j in clickedMarkers) {
+                clickedMarkers[j].marker.setVisible(true);
+            }
+        }
+//Shows both category and neighborhood
+        function selectNeighborhoodCategory(neighborhood, category) {
+            for (var i in allMarkers) {
+                allMarkers[i].marker.setVisible(false);
+            }
+            clickedMarkers = _.where(allMarkers, {neighborhood:neighborhood, category:category});
+            for (j in clickedMarkers) {
+                clickedMarkers[ j].marker.setVisible(true);
+            }
+        }
+
+
+
+
+//Selects either category or neighborhood
+
+
+        $(document).ready(function() {
+            $('span.category').on('click',function() {
+                category = $(this).attr("name");
+                $('li span.category').removeClass("clicked");
+                $(this).addClass("clicked");
+                showMarkers();
+            })
+            $('span.neighborhood').on('click',function() {
+                neighborhood = $(this).attr("name");
+                $('li span.neighborhood').removeClass("clicked");
+                $(this).addClass("clicked");
+                showMarkers();
+            })
+        });
+
+google.maps.event.addDomListener(window, 'load', getDynamicMap);
+
+//Code from original template. Currently not used. 
+$(document).ready(function () {
+    "use strict";
+    $('#link_open').on('click', function () {
+        if ($('#link_open').hasClass("clooses")) {
+            $("#open_span").removeClass("close_span").addClass("open_span");
+            $("#profile").removeClass("profile_closed");
+            $("#link_open").removeClass("clooses");
+            $("#cont").addClass("none");
+        }
+        else {
+            $("#open_span").addClass("close_span").removeClass("open_span");
+            $("#profile").addClass("profile_closed");
+            $("#link_open").addClass("clooses");
+            $("#cont").removeClass("none");
         }
     });
-};
-(function(d){
-    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-    if (d.getElementById(id)) {return;}
-    js = d.createElement('script'); js.id = id; js.async = true;
-    js.src = "//connect.facebook.net/en_US/all.js";
-    ref.parentNode.insertBefore(js, ref);
-    }(document));
-
-function testAPI() {
-    console.log('Welcome! Fetching your information.... ');
-    FB.api('/me', function(response) {
-        console.log(response);
-        console.log('Good to see you, ' + response.name + '.');
+    $('#map_open').on('click', function () {
+        "use strict";
+        $("#cont").addClass("none");
+        $("#Show_cont").removeClass("none");
     });
-}
-
-*/
-/*function getDynamicMap(position) {
-    var mapOptions = {
-        center: new google.maps.LatLng(37.797677,-122.394339),
-        zoom: 15,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-    map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    console.log("complaints");
-    for (var id in complaints) {
-        var lat = complaints[id].point.latitude;
-        var lng = complaints[id].point.longitude;
-        var address = complaints[id].address;
-        var customInfo = '<a href="#" onclick="fillCommentsBox('+complaints[id].case_id+')">'+complaints[id].category+'</a>';
-        //var customInfo = '<a href="http://bootcamp.rocketu.com/exercises/project/reports-page.html$'+complaints[id].case_id+'">'+complaints[id].case_id+'</a>';
-        var infoWindow = new google.maps.InfoWindow({
-            content: customInfo
-        });
-        var	marker = new google.maps.Marker({
-            position: new google.maps.LatLng(lat,lng),
-            map: map,
-            title: customInfo
-           });
-        google.maps.event.addListener(marker, 'click', function() {
-            console.log(this.title);
-            infoWindow.setContent(this.title);
-            infoWindow.open(map,this);
-            console.log('click');
-        });
-    }
-}
-console.log('success');
-google.maps.event.addDomListener(window, 'load', getDynamicMap);
-
-function fillCommentsBox(case_id) {
-    var commentsMustache = $('#comments-template').html();
-    var commentsOutput = Mustache.render(commentsMustache, comments[case_id]);
-    $('#comments').html(commentsOutput);
-    var complaintsMustache = $('#complaints-template').html();
-    console.log(complaints[case_id]);
-    var complaintsOutput = Mustache.render(complaintsMustache, complaints[case_id]);
-    $('#complaints').html(complaintsOutput);
-}
-*/
-/*if (window.location.href.search('case_id=')!==-1) {
-var case_id = getQueryVariable('case_id');
-currentComplaint = complaints[case_id];
-currentComment = comments[case_id];
-console.log(currentComplaint);
-}*/
-
-/*
-var markers = {{ json|safe }};
-console.log(markers);
-var lat;
-var lng;
-var address;
-var case_id;
-var category;
-var customInfo;
-function getDynamicMap(position) {
-    var mapOptions = {
-        center: new google.maps.LatLng(37.797677,-122.394339),
-        zoom: 14,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-    map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    for (var i in markers) {
-        var lat = markers[i].fields.latitude;
-        var lng = markers[i].fields.longitude;
-        var address = markers[i].fields.address;
-        var case_id = markers[i].fields.case_id;
-        var category = markers[i].fields.category;
-        var pk = markers[i].pk - 1;
-        var comment = markers[i].fields.comments;
-        var customInfo = '<a href="#" onclick="fillCommentsBox('+pk+')">'+category+'</a>';
-        //var customInfo = '<a href="http://bootcamp.rocketu.com/exercises/project/reports-page.html$'+complaints[id].case_id+'">'+complaints[id].case_id+'</a>';
-        var infoWindow = new google.maps.InfoWindow({
-            content: customInfo
-        });
-        var	marker = new google.maps.Marker({
-            position: new google.maps.LatLng(lat,lng),
-            map: map,
-            title: customInfo
-           });
-        google.maps.event.addListener(marker, 'click', function() {
-            console.log(this.title);
-            infoWindow.setContent(this.title);
-            infoWindow.open(map,this);
-        });
-    }
-}
-google.maps.event.addDomListener(window, 'load', getDynamicMap);
-
-function fillCommentsBox(pk) {
-    $('#opened').html(markers[pk].fields.opened);
-    $('#status').html(markers[pk].fields.status);
-    $('#category').html(markers[pk].fields.category);
-    $('#address').html(markers[pk].fields.address);
-    console.log(markers[pk].fields.complaints)
-}
-// Hides/Shows the anchor tag:
-$(document).ready(function() {
-    $('#hidden_button').hide();
-    $('#map').click(function() {
-        $('#hidden_button').show();
+    $('#Show_cont').on('click', function () {
+        "use strict";
+        $("#cont").removeClass("none");
     });
 });
-*/

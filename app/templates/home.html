@@ -8,15 +8,19 @@
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet" media="screen">
     <link href="{% static "css/main.css" %}" rel="stylesheet" media="screen">
     <link rel="stylesheet" href= "{% static "css/whhg.css" %}">
+    <script src="{% static "js/jQueryv2.0.3.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/pxgradient-1.0.2.jquery.js" %}"></script>
+    <script src="{% static "js/bootstrap.js" %}"></script>
+    <script src="{% static "js/underscore.js" %}"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB31mjMaXNA33VUKwCndXANCkbgULTyY2k&sensor=false"></script>
+    <script type="text/javascript" src= "{% static "js/application.js" %}"></script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]> <script src="../../assets/js/html5shiv.js"></script> <script src="../../assets/js/respond.min.js"></script> <![endif]-->
 </head>
-<body onload="initialize()">
-
+<body>
     <!--map-->
     <div id="map_canvas" class="map"></div>
     <!--/map-->
-
         <!--Content-->
         <div class="col-md-11 side-bar" id="cont">
              <!--Map open (for adaptive)-->
@@ -86,9 +90,6 @@
                             <span class='checkboxes-span neighborhood' name="Downtown/Tenderloin">Downtown/Tenderloin</span>
                         </li>
                         <li>
-                            <span class='checkboxes-span neighborhood' name="Eureka Valley/Dolores Heights">Eureka Valley/Dolores Heights</span>
-                        </li>
-                        <li>
                             <span class='checkboxes-span neighborhood' name="Excelsior">Excelsior</span>
                         </li>
                         <li>
@@ -104,6 +105,12 @@
                             <span class='checkboxes-span neighborhood' name="Hayes Valley">Hayes Valley</span>
                         </li>
                         <li>
+                            <span class='checkboxes-span neighborhood' name="Inner Richmond">Inner Richmond</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Inner Sunset">Inner Sunset</span>
+                        </li>
+                        <li>
                             <span class='checkboxes-span neighborhood' name="Mission">Mission</span>
                         </li>
                         <li>
@@ -114,6 +121,12 @@
                         </li>
                         <li>
                             <span class='checkboxes-span neighborhood' name="North Beach">North Beach</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Outer Richmond">Outer Richmond</span>
+                        </li>
+                        <li>
+                            <span class='checkboxes-span neighborhood' name="Outer Sunset">Outer Sunset</span>
                         </li>
                         <li>
                             <span class='checkboxes-span neighborhood' name="Pacific Heights">Pacific Heights</span>
@@ -129,9 +142,6 @@
                         </li>
                         <li>
                             <span class='checkboxes-span neighborhood' name="South of Market">South of Market</span>
-                        </li>
-                        <li>
-                            <span class='checkboxes-span neighborhood' name="Twin Peaks">Twin Peaks</span>
                         </li>
                         <li>
                             <span class='checkboxes-span neighborhood' name="Van Ness/Civic Center">Van Ness/Civic Center</span>
@@ -170,232 +180,10 @@
         </div>
         <!--/Content-->
     </div>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="{% static "js/jQueryv2.0.3.js" %}"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{% static "js/bootstrap.js" %}"></script>
-    <script src="{% static "js/underscore.js" %}"></script>
-    <!--Google maps API linl-->
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB31mjMaXNA33VUKwCndXANCkbgULTyY2k&sensor=false"></script>
-    <!--Your map settings script-->
-    <script>
+    <script type="text/javascript">
         var markersJson = {{ json|safe }};
-        var markersObject = {};
-{#        var latitude;#}
-{#        var longitude;#}
-{#        var address;#}
-{#        var id;#}
-{#        var case_id;#}
-{#        var comments;#}
-        var category;
-{#        var customInfo;#}
-{#        var map;#}
-        var clickedMarkers = [];
-        var neighborhood;
-        var markersSelected = [];
-        var markersData = [];
-        var categoryList = [];
-        var neighborhoodList = [];
-        var curCategory = '';
-        var markerObj = {};
-        var allMarkers = [];
-        var Lat = 37.766396;
-        var Lng = -122.452927;
-        var zoom = 13;
-// Trying out new way to draw the map and markers:
-        function getDynamicMap() {
-            var center = new google.maps.LatLng(Lat,Lng);
-            var mapOptions = {
-                zoom: zoom,
-                center: center,
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
-                panControl: false,
-                mapTypeControlOptions: {
-                    position: google.maps.ControlPosition.TOP_RIGHT
-                },
-                zoomControl: true,
-                zoomControlOptions: {
-                    style: google.maps.ZoomControlStyle.LARGE,
-                    position: google.maps.ControlPosition.TOP_RIGHT
-                    }
-            };
-            map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
-            buildMarkers(markersJson);
-        }
-
-        function buildMarkers(markersData) {
-            for (var i in markersData) {
-                // CHECK IF CATEGORY IS IN MASTER CATEGORY LIST
-                var category = markersData[i].fields.category;
-                if ($.inArray(category,categoryList)===-1) {
-                    categoryList.push(category);
-                    markersObject[category] = [];
-                }
-                var neighborhood = markersData[i].fields.neighborhood;
-                if ($.inArray(neighborhood,neighborhoodList)===-1) {
-                    neighborhoodList.push(neighborhood);
-                    markersObject[neighborhood] = [];
-                }
-                // THIS MARKER OBJECT
-                var markerObj = {
-                    id: markersData[i].pk
-                }
-                // COPY MARKER DATA FROM SERIALIZED JSON FIELDS
-                for (var j in markersData[i].fields) {
-                    markerObj[j] = markersData[i].fields[j];
-                }
-                // ADDITIONAL MARKER SETUP
-
-                markerObj.customInfo = '<a href="/lookup/'+markerObj.id+'">'+markerObj.category+'</a>';
-                markerObj.infoWindow = new google.maps.InfoWindow({
-                    content: markerObj.customInfo
-                });
-                markerObj.marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(markerObj.latitude,markerObj.longitude),
-                    map: map,
-                    title: markerObj.customInfo,
-                    category: markerObj.category
-                   });
-                google.maps.event.addListener(markerObj.marker, 'click', function() {
-                    console.log(this.title);
-                    markerObj.infoWindow.setContent(this.title);
-                    markerObj.infoWindow.open(map,this);
-                });
-
-                // GET MAP CENTER AND ZOOM
-                var bound = new google.maps.LatLngBounds();
-                for (i = 0; i < allMarkers.length - 10; i++) {
-                    bound.extend( new google.maps.LatLng(allMarkers[i].latitude,allMarkers[i].longitude));
-                }
-                // PUSH MARKERS DATA TO ARRAYS
-                markersObject[category].push(markerObj);
-                markersObject[neighborhood].push(markerObj);
-                allMarkers.push(markerObj);
-            }
-            console.log(allMarkers);
-            var l = bound.getCenter();
-            console.log(l.lb);
-        }
-/*
-        function updateCategoryMarker(category,visibleFlag) {
-            console.log(category + ' ' + visibleFlag);
-            for(i in markersObject[category]) {
-                markersObject[category][i].marker.setVisible(visibleFlag);
-            }
-        }
-
-        function updateNeighborhoodMarker(neighborhood,visibleFlag) {
-            console.log(neighborhood + '' + visibleFlag);
-            for(i in markersObject[neighborhood]) {
-                markersObject[neighborhood][i].marker.setVisible(visibleFlag);
-            }
-        }
-
-//Determines which function to show markers
-*/      function showMarkers() {
-            if (category && !neighborhood) {
-                selectCategory(category);
-            } else if (neighborhood && !category) {
-                selectNeighorhood(neighborhood);
-            } else {
-                selectNeighborhoodCategory(neighborhood, category);
-            }
-        }
-//Shows just category
-        function selectCategory(category){
-            for (var i in allMarkers) {
-                allMarkers[i].marker.setVisible(false);
-            }
-            clickedMarkers = _.where(allMarkers, {category:category});
-            for (j in clickedMarkers) {
-                clickedMarkers[j].marker.setVisible(true);
-            }
-        }
-//Shows just neighborhood
-        function selectNeighorhood(neighborhood) {
-            for (var i in allMarkers) {
-                allMarkers[i].marker.setVisible(false);
-            }
-            clickedMarkers = _.where(allMarkers, {neighborhood:neighborhood});
-            for (j in clickedMarkers) {
-                clickedMarkers[j].marker.setVisible(true);
-            }
-        }
-//Shows both category and neighborhood
-        function selectNeighborhoodCategory(neighborhood, category) {
-            for (var i in allMarkers) {
-                allMarkers[i].marker.setVisible(false);
-            }
-            clickedMarkers = _.where(allMarkers, {neighborhood:neighborhood, category:category});
-            for (j in clickedMarkers) {
-                clickedMarkers[ j].marker.setVisible(true);
-            }
-        }
-
-
-
-
-//Selects either category or neighborhood
-
-
-        $(document).ready(function() {
-            $('span.category').on('click',function() {
-                category = $(this).attr("name");
-                $('li span.category').removeClass("clicked");
-                $(this).addClass("clicked");
-                showMarkers();
-            })
-            $('span.neighborhood').on('click',function() {
-                neighborhood = $(this).attr("name");
-                $('li span.neighborhood').removeClass("clicked");
-                $(this).addClass("clicked");
-                showMarkers();
-            })
-        });
-//.catalog input[type=checkbox]
-//Turning categories on and off
-/*        $(document).ready(function() {
-            $("span.category").on('click',function() {
-                category = $(this).attr("name");
-                for(var i in categoryList) {
-                    if (categoryList[i] === category) {
-                        updateCategoryMarker(categoryList[i],true);
-                        $('li span').removeClass("clicked");
-                        $(this).addClass("clicked");
-                    } else {
-                        updateCategoryMarker(categoryList[i],false);
-                    }
-                }
-            });
-        });
-
-//Turning neighborhoods on and off
-        $(document).ready(function() {
-            $('span.neighborhood').on('click',function() {
-                neighborhood = $(this).attr('name');
-                for (var j in neighborhoodList[j] === neighborhood) {
-                    console.log(neighborhood);
-                    if (neighborhoodList[j] === neighborhood) {
-                        updateNeighborhoodMarker(neighborhoodList[j],true);
-                        $('li span').removeClass("clicked");
-                        $(this).addClass("clicked");
-                        console.log('neighborhood');
-                    } else {
-                        updateNeighborhoodMarker(neighborhoodList[j],false)
-                    }
-                }
-            });
-        });
-*/
-        google.maps.event.addDomListener(window, 'load', getDynamicMap);
-
-
-
     </script>
     <script type="text/javascript" src="{% static "js/map.js" %}"></script>
-    <!--jQuery-->
-        <script type="text/javascript" src="{% static "js/jQueryv2.0.3.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/pxgradient-1.0.2.jquery.js" %}"></script>
     <!--Script for worked left smile categories menu-->
     <script type="text/javascript">
         $(document).ready(function () {
@@ -428,49 +216,6 @@
                 })
             })
         })
-    </script>
-    <!--/Script for worked left smile categoryes menu-->
-    <!--Script for worked profile page-->
-    <script type="text/javascript">
-        $(document).ready(function () {
-                        "use strict";
-            $('#link_open').on('click', function () {
-                if ($('#link_open').hasClass("clooses")) {
-                    $("#open_span").removeClass("close_span").addClass("open_span");
-                    $("#profile").removeClass("profile_closed");
-                    $("#link_open").removeClass("clooses");
-                    $("#cont").addClass("none");
-                }
-                else {
-                    $("#open_span").addClass("close_span").removeClass("open_span");
-                    $("#profile").addClass("profile_closed");
-                    $("#link_open").addClass("clooses");
-                    $("#cont").removeClass("none");
-                }
-            })
-              $('#map_open').on('click', function () {
-                            "use strict";
-            $("#cont").addClass("none");
-            $("#Show_cont").removeClass("none");
-
-        })
-        $('#Show_cont').on('click', function () {
-                        "use strict";
-            $("#cont").removeClass("none");
-        })
-        });
-    </script>
-    <!--/Script for worked profile page-->
-    <!--Script for gradient icon in general menu-->
-    <script type="text/javascript">
-        $(function () {
-                        "use strict";
-            $(".gradientmenu").pxgradient({
-                step: 10,
-                colors: ["#fdfeff", "#cfeefa"],
-                dir: "y"
-            });
-        });
     </script>
 </body>
 </html>
