@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ce24f776-7f10-43e2-b41e-9f4c62082dd0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/js/application.js" afterPath="$PROJECT_DIR$/app/static/js/application.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/home.html" afterPath="$PROJECT_DIR$/app/templates/home.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/css/main.css" afterPath="$PROJECT_DIR$/app/static/css/main.css" />
     </list>
     <ignored path="citizen311.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -73,7 +75,7 @@
       <file leaf-file-name="home.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/templates/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="276" column="28" selection-start="13349" selection-end="13349" vertical-scroll-proportion="-0.33052278">
+            <state line="177" column="18" selection-start="9592" selection-end="9592" vertical-scroll-proportion="-0.3153457">
               <folding />
             </state>
           </provider>
@@ -82,7 +84,7 @@
       <file leaf-file-name="main.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/static/css/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="403" column="16" selection-start="8799" selection-end="8802" vertical-scroll-proportion="0.0">
+            <state line="405" column="16" selection-start="8822" selection-end="8825" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -109,7 +111,7 @@
       <file leaf-file-name="lookup.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/lookup.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="111" column="40" selection-start="5187" selection-end="5187" vertical-scroll-proportion="-22.666666">
+            <state line="123" column="40" selection-start="5755" selection-end="5755" vertical-scroll-proportion="-22.666666">
               <folding />
             </state>
           </provider>
@@ -528,7 +530,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="240" y="22" width="1200" height="801" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -681,7 +683,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/static/css/main.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="403" column="16" selection-start="8799" selection-end="8802" vertical-scroll-proportion="0.0">
+        <state line="405" column="16" selection-start="8822" selection-end="8825" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -697,7 +699,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/lookup.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="111" column="40" selection-start="5187" selection-end="5187" vertical-scroll-proportion="-22.666666">
+        <state line="123" column="40" selection-start="5755" selection-end="5755" vertical-scroll-proportion="-22.666666">
           <folding />
         </state>
       </provider>
@@ -711,7 +713,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="276" column="28" selection-start="13349" selection-end="13349" vertical-scroll-proportion="-0.33052278">
+        <state line="177" column="18" selection-start="9592" selection-end="9592" vertical-scroll-proportion="-0.3153457">
           <folding />
         </state>
       </provider>

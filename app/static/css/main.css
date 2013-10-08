@@ -278,6 +278,7 @@ height: 100%;
 .side-bar {
     background: rgba(255, 255, 255, .95);
     margin-left: 50px;
+    margin-right: 0px;
     max-width: 240px;
     border-right: 1px solid #d3d3d3;
     min-height: 100%;
@@ -1054,8 +1055,15 @@ li span.clicked {
                 width: 100%;
                 cursor: default;
             }
+#clearButton:hover {
+    cursor: default;
+    color: #5d8eae;
+}
 
-
+div a:hover {
+    cursor: default;
+    color: #5d8eae;
+}
 
 
 
