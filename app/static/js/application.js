@@ -12,6 +12,11 @@ var allMarkers = [];
 var Lat = 37.766396;
 var Lng = -122.452927;
 var zoom = 13;
+var categoryClusters = [];
+var mc;
+var markerClusters;
+var clustersArray;
+
 // Trying out new way to draw the map and markers:
 function getDynamicMap() {
     var center = new google.maps.LatLng(Lat,Lng);
@@ -27,11 +32,20 @@ function getDynamicMap() {
         zoomControlOptions: {
             style: google.maps.ZoomControlStyle.LARGE,
             position: google.maps.ControlPosition.TOP_RIGHT
-            }
+        }
     };
     map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
     buildMarkers(markersJson);
+    var mcOptions = {gridSize: 50, maxZoom: 15 };
+    console.log(allMarkers[0]);
+    var mc = new MarkerClusterer(map, allMarkers, mcOptions);
+    markerClusters = mc;
+    console.log(markerClusters.getMarkers());
 }
+
+//Gets markers into clusters
+//var mcOptions = {gridSize: 50, maxZoom: 15 };
+//var mc = new MarkerClusterer(map, allMarkers, mcOptions);
 
 function buildMarkers(markersData) {
     for (var i in markersData) {
@@ -55,7 +69,6 @@ function buildMarkers(markersData) {
             markerObj[j] = markersData[i].fields[j];
         }
         // ADDITIONAL MARKER SETUP
-
         markerObj.customInfo = '<a href="/lookup/'+markerObj.id+'">'+markerObj.category+'</a>';
         markerObj.infoWindow = new google.maps.InfoWindow({
             content: markerObj.customInfo
@@ -71,34 +84,15 @@ function buildMarkers(markersData) {
             markerObj.infoWindow.setContent(this.title);
             markerObj.infoWindow.open(map,this);
         });
-
-        // GET MAP CENTER AND ZOOM
-        var bound = new google.maps.LatLngBounds();
-        for (i = 0; i < allMarkers.length - 10; i++) {
-            bound.extend( new google.maps.LatLng(allMarkers[i].latitude,allMarkers[i].longitude));
-        }
         // PUSH MARKERS DATA TO ARRAYS
         markersObject[category].push(markerObj);
         markersObject[neighborhood].push(markerObj);
-        allMarkers.push(markerObj);
+        allMarkers.push(markerObj.marker);
     }
-    var l = bound.getCenter();
 }
-/*
-        function updateCategoryMarker(category,visibleFlag) {
-            console.log(category + ' ' + visibleFlag);
-            for(i in markersObject[category]) {
-                markersObject[category][i].marker.setVisible(visibleFlag);
-            }
-        }
 
-        function updateNeighborhoodMarker(neighborhood,visibleFlag) {
-            console.log(neighborhood + '' + visibleFlag);
-            for(i in markersObject[neighborhood]) {
-                markersObject[neighborhood][i].marker.setVisible(visibleFlag);
-            }
-        }
-*/
+google.maps.event.addDomListener(window, 'load', getDynamicMap);
+
 
 //Determines which function to show markers
 function showMarkers() {
@@ -113,13 +107,15 @@ function showMarkers() {
 }
 //Shows just category
 function selectCategory(category){
-    for (var i in allMarkers) {
-        allMarkers[i].marker.setVisible(false);
-    }
-    clickedMarkers = _.where(allMarkers, {category:category});
-    for (j in clickedMarkers) {
-        clickedMarkers[j].marker.setVisible(true);
-    }
+//    clustersArray = markerClusters.getMarkers();
+    for (i = 0; i < allMarkers.length; i++) {
+            markerClusters.removeMarker(allMarkers[i], true);
+        if (allMarkers[i].category == category) {
+            markerClusters.addMarker(allMarkers[i], true);
+        }
+     }
+     markerClusters.repaint();
+     console.log(markerClusters.getTotalMarkers());
 }
 //Shows just neighborhood
 function selectNeighorhood(neighborhood) {
@@ -138,7 +134,7 @@ function selectNeighborhoodCategory(neighborhood, category) {
     }
     clickedMarkers = _.where(allMarkers, {neighborhood:neighborhood, category:category});
     for (j in clickedMarkers) {
-        clickedMarkers[ j].marker.setVisible(true);
+        clickedMarkers[j].marker.setVisible(true);
     }
 }
 //Selects either category or neighborhood or starts over
@@ -161,9 +157,13 @@ $(document).ready(function() {
         category = '';
         neighborhood = '';
         $("#clearButton").hide();
-        for (var i in allMarkers) {
-            allMarkers[i].marker.setVisible(true);
+        console.log('AllMarkersLength: ' + allMarkers.length);
+        for (i = 0; i < allMarkers.length; i++) {
+            markerClusters.removeMarker(allMarkers[i], true);
+            markerClusters.addMarker(allMarkers[i], true);
         }
+        markerClusters.repaint();
+        console.log(markerClusters.getTotalMarkers());
     });
 });
 
@@ -180,8 +180,6 @@ function hideShowButton() {
 $(document).ready(function () {
     $("#clearButton").hide();
 });
-
-google.maps.event.addDomListener(window, 'load', getDynamicMap);
 
 //Code from original template. Currently not used. 
 $(document).ready(function () {
@@ -210,3 +208,80 @@ $(document).ready(function () {
         $("#cont").removeClass("none");
     });
 });
+
+//Shows/Hides More Neighborhoods on Home Page
+$(document).ready(function () {
+    $('#allNeighborhoods').hide();
+    $('#more').on('click', function () {
+        $('#allNeighborhoods').show();
+        $('#more').hide();
+    });
+    $('#less').on('click', function () {
+        $('#allNeighborhoods').hide();
+        $('#more').show()
+    })
+});
+
+var geocoder;
+var latitude;
+var longitude;
+var address;
+var isCallingAPI = false;
+var results;
+
+function getAddress() {
+    address = "";
+    address = document.getElementById('id_address').value;
+    $.ajax({
+        type:'get',
+        url:'http://maps.googleapis.com/maps/api/geocode/json?address='+address+'+San+Francisco+CA&sensor=false',
+        data: {},
+        dataType: 'json',
+        success: function(json) {
+            console.log(json);
+            latitude = json.results[0].geometry.location.lat;
+            longitude = json.results[0].geometry.location.lng;
+            $('#id_latitude').val(latitude);
+            $('#id_longitude').val(longitude);
+            var mapOptions = {
+                center: new google.maps.LatLng(latitude,longitude),
+                zoom: 14,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                panControl: false,
+                mapTypeControlOptions: {
+                    position: google.maps.ControlPosition.TOP_RIGHT
+                },
+                zoomControl: true,
+                zoomControlOptions: {
+                    style: google.maps.ZoomControlStyle.LARGE,
+                    position: google.maps.ControlPosition.TOP_RIGHT
+                }
+            }
+            submitMap = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+            var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(latitude,longitude),
+                        map: submitMap
+            });
+            }
+    });
+}
+$(document).ready(function() {
+   $('#id_address').keyup(function() {
+      getAddress();
+   });
+});
+/*
+    function updateCategoryMarker(category,visibleFlag) {
+        console.log(category + ' ' + visibleFlag);
+        for(i in markersObject[category]) {
+            markersObject[category][i].marker.setVisible(visibleFlag);
+        }
+    }
+
+    function updateNeighborhoodMarker(neighborhood,visibleFlag) {
+        console.log(neighborhood + '' + visibleFlag);
+        for(i in markersObject[neighborhood]) {
+            markersObject[neighborhood][i].marker.setVisible(visibleFlag);
+        }
+    }
+*/

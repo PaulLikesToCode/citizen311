@@ -12,6 +12,7 @@
     <script type="text/javascript" src="{% static "js/pxgradient-1.0.2.jquery.js" %}"></script>
     <script src="{% static "js/bootstrap.js" %}"></script>
     <script src="{% static "js/underscore.js" %}"></script>
+    <script type="text/javascript" src= "{% static "js/markerclusterer-compiled.js" %}"></script>
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB31mjMaXNA33VUKwCndXANCkbgULTyY2k&sensor=false"></script>
     <script type="text/javascript" src= "{% static "js/application.js" %}"></script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -38,25 +39,48 @@
                 <div class="col-md-12">
                     <div id="tabs">
                         <div id="tab1" class="active tab">
-                            <h5 class="cat">Narrow down your search by type...     <span id="clearButton">(start over)</span></h5>
+                            <h5 class="cat">Narrow down your search     <span id="clearButton">(start over)</span></h5>
                             <ul class="catalog">
                                 <li>
-                                    <span class='checkboxes-span category' name="Street and Sidewalk Cleaning">Street and Sidewalk Cleaning</span>
+                                    <span class='checkboxes-span category' name="311 External Request">311 External Request</span>
                                 </li>
                                 <li>
-                                    <span class='checkboxes-span category' name="Graffiti Private Property">Graffiti</span>
+                                    <span class='checkboxes-span category' name="Abandoned Vehicle">Abandoned Vehicle</span>
+                                </li>
+                                <li>
+                                    <span class='checkboxes-span category' name="Blocked Street or SideWalk">Blocked Street or SideWalk</span>
+                                </li>
+                                <li>
+                                    <span class='checkboxes-span category' name="Damaged Property">Damaged Property</span>
+                                <li>
+                                    <span class='checkboxes-span category' name="General Requests">General Requests</span>
+                                </li>
+                                <li>
+                                    <span class='checkboxes-span category' name="Graffiti Private Property">Graffiti Private Property</span>
+                                </li>
+                                <li>
+                                    <span class='checkboxes-span category' name="Graffiti Public Property">Graffiti Public Property</span>
+                                </li>
+                                <li>
+                                    <span class='checkboxes-span category' name="Illegal Postings">Illegal Postings</span>
                                 </li>
                                 <li>
                                     <span class='checkboxes-span category' name="Litter Receptacles">Litter Receptacles</span>
                                 </li>
                                 <li>
-                                    <span class='checkboxes-span category' name="Tree Maintenance">Tree Maintenance</span>
+                                    <span class='checkboxes-span category' name="Rec and Park Requests">Rec and Park Requests</span>
                                 </li>
                                 <li>
-                                    <span class='checkboxes-span category' name="Streetlights">Streetlights</span>
+                                    <span class='checkboxes-span category' name="Residential Building Request">Residential Building Request</span>
+                                </li>
+                                <li>
+                                    <span class='checkboxes-span category' name="SFHA Requests">SFHA Requests</span>
                                 </li>
                                 <li>
                                     <span class='checkboxes-span category' name="Sewer Issues">Sewer Issues</span>
+                                </li>
+                                <li>
+                                    <span class='checkboxes-span category' name="Sidewalk or Curb">Sidewalk or Curb</span>
                                 </li>
                                 <li>
                                     <span class='checkboxes-span category' name="Sign Repair">Sign Repair</span>
@@ -64,13 +88,25 @@
                                 <li>
                                     <span class='checkboxes-span category' name="Street Defects">Street Defects</span>
                                 </li>
+                                <li>
+                                    <span class='checkboxes-span category' name="Street and Sidewalk Cleaning">Street and Sidewalk Cleaning</span>
+                                </li>
+                                <li>
+                                    <span class='checkboxes-span category' name="Streetlights">Streetlights</span>
+                                </li>
+                                <li>
+                                    <span class='checkboxes-span category' name="Temporary Sign Request">Temporary Sign Request</span>
+                                </li>
+                                <li>
+                                    <span class='checkboxes-span category' name="Tree Maintenance">Tree Maintenance</span>
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
             <!--Search by neighborhood-->
-            <div>
+            <!--div>
                 <div id="tab2" class="active tab">
                     <h5 class="cat">...or by neighborhood.</h5>
                     <ul class="catalog">
@@ -78,86 +114,93 @@
                             <span class='checkboxes-span neighborhood' name="Alamo Square">Alamo Square</span>
                         </li>
                         <li>
-                            <span class='checkboxes-span neighborhood' name="Bayview">Bayview</span>
-                        </li>
-                        <li>
-                            <span class='checkboxes-span neighborhood' name="Bernal Heights">Bernal Heights</span>
-                        </li>
-                        <li>
-                            <span class='checkboxes-span neighborhood' name="Castro/Upper Market">Castro/Upper Market</span>
-                        </li>
-                        <li>
                             <span class='checkboxes-span neighborhood' name="Downtown/Tenderloin">Downtown/Tenderloin</span>
-                        </li>
-                        <li>
-                            <span class='checkboxes-span neighborhood' name="Excelsior">Excelsior</span>
                         </li>
                         <li>
                             <span class='checkboxes-span neighborhood' name="Financial District">Financial District</span>
                         </li>
                         <li>
-                            <span class='checkboxes-span neighborhood' name="Glen Park">Glen Park</span>
-                        </li>
-                        <li>
                             <span class='checkboxes-span neighborhood' name="Haight Ashbury">Haight Ashbury</span>
-                        </li>
-                        <li>
-                            <span class='checkboxes-span neighborhood' name="Hayes Valley">Hayes Valley</span>
-                        </li>
-                        <li>
-                            <span class='checkboxes-span neighborhood' name="Inner Richmond">Inner Richmond</span>
-                        </li>
-                        <li>
-                            <span class='checkboxes-span neighborhood' name="Inner Sunset">Inner Sunset</span>
                         </li>
                         <li>
                             <span class='checkboxes-span neighborhood' name="Mission">Mission</span>
                         </li>
                         <li>
-                            <span class='checkboxes-span neighborhood' name="Nob Hill">Nob Hill</span>
-                        </li>
-                        <li>
-                            <span class='checkboxes-span neighborhood' name="Noe Valley">Noe Valley</span>
-                        </li>
-                        <li>
-                            <span class='checkboxes-span neighborhood' name="North Beach">North Beach</span>
-                        </li>
-                        <li>
-                            <span class='checkboxes-span neighborhood' name="Outer Richmond">Outer Richmond</span>
-                        </li>
-                        <li>
-                            <span class='checkboxes-span neighborhood' name="Outer Sunset">Outer Sunset</span>
-                        </li>
-                        <li>
-                            <span class='checkboxes-span neighborhood' name="Pacific Heights">Pacific Heights</span>
-                        </li>
-                        <li>
-                            <span class='checkboxes-span neighborhood' name="Portola">Portola</span>
-                        </li>
-                        <li>
-                            <span class='checkboxes-span neighborhood' name="Potrero Hill">Potrero Hill</span>
-                        </li>
-                        <li>
-                            <span class='checkboxes-span neighborhood' name="Russian Hill">Russian Hill</span>
-                        </li>
-                        <li>
                             <span class='checkboxes-span neighborhood' name="South of Market">South of Market</span>
                         </li>
                         <li>
-                            <span class='checkboxes-span neighborhood' name="Van Ness/Civic Center">Van Ness/Civic Center</span>
+                            <span class='checkboxes-span neighborhood' name="Bayview">Bayview</span>
                         </li>
                         <li>
-                            <span class='checkboxes-span neighborhood' name="Visitacion Valley">Visitacion Valley</span>
+                            <span class='checkboxes-span more' name='more' id='more'>More...</span>
                         </li>
-
+                        <div id="allNeighborhoods">
+                            <li>
+                                <span class='checkboxes-span neighborhood' name="Bernal Heights">Bernal Heights</span>
+                            </li>
+                            <li>
+                                <span class='checkboxes-span neighborhood' name="Castro/Upper Market">Castro/Upper Market</span>
+                            </li>
+                            <li>
+                                <span class='checkboxes-span neighborhood' name="Excelsior">Excelsior</span>
+                            </li>
+                            <li>
+                                <span class='checkboxes-span neighborhood' name="Glen Park">Glen Park</span>
+                            </li>
+                            <li>
+                                <span class='checkboxes-span neighborhood' name="Hayes Valley">Hayes Valley</span>
+                            </li>
+                            <li>
+                                <span class='checkboxes-span neighborhood' name="Inner Richmond">Inner Richmond</span>
+                            </li>
+                            <li>
+                                <span class='checkboxes-span neighborhood' name="Inner Sunset">Inner Sunset</span>
+                            </li>
+                            <li>
+                                <span class='checkboxes-span neighborhood' name="Nob Hill">Nob Hill</span>
+                            </li>
+                            <li>
+                                <span class='checkboxes-span neighborhood' name="Noe Valley">Noe Valley</span>
+                            </li>
+                            <li>
+                                <span class='checkboxes-span neighborhood' name="North Beach">North Beach</span>
+                            </li>
+                            <li>
+                                <span class='checkboxes-span neighborhood' name="Outer Richmond">Outer Richmond</span>
+                            </li>
+                            <li>
+                                <span class='checkboxes-span neighborhood' name="Outer Sunset">Outer Sunset</span>
+                            </li>
+                            <li>
+                                <span class='checkboxes-span neighborhood' name="Pacific Heights">Pacific Heights</span>
+                            </li>
+                            <li>
+                                <span class='checkboxes-span neighborhood' name="Portola">Portola</span>
+                            </li>
+                            <li>
+                                <span class='checkboxes-span neighborhood' name="Potrero Hill">Potrero Hill</span>
+                            </li>
+                            <li>
+                                <span class='checkboxes-span neighborhood' name="Russian Hill">Russian Hill</span>
+                            </li>
+                            <li>
+                                <span class='checkboxes-span neighborhood' name="Van Ness/Civic Center">Van Ness/Civic Center</span>
+                            </li>
+                            <li>
+                                <span class='checkboxes-span neighborhood' name="Visitacion Valley">Visitacion Valley</span>
+                            </li>
+                            <li>
+                                <span class='checkboxes-span less' name='less' id='less'>Less...</span>
+                            </li>
+                        </div>
                         {% for i in neighborhood_info %}{% ifchanged %}
                                 <!--li>
                                     <span class='checkboxes-span' name="{{ i.neighborhood }}">{{ i.neighborhood }}</span>
                                 </li-->
                         {% endifchanged %}{% endfor %}
-                    </ul>
+                    <!--/ul>
                 </div>
-            </div>
+            </div-->
             <!--/Search by neighborhood-->
             <!--/Category menu-->
             <!--Search-->
@@ -187,38 +230,5 @@
         var markersJson = {{ json|safe }};
     </script>
     <script type="text/javascript" src="{% static "js/map.js" %}"></script>
-    <!--Script for worked left smile categories menu-->
-    <script type="text/javascript">
-        $(document).ready(function () {
-                        "use strict";
-            $(".inner ul li a").each(function (i) {
-                $(".inner ul li a:eq(" + i + ")").click(function () {
-                    var tab_id = i + 1;
-                    $(".inner ul li a").removeClass("active");
-                    $("#tabs .active").removeClass("active");
-                    $(this).addClass("active");
-                    $("#tabs div").stop(false, false).hide();
-                    $("#tab" + tab_id).stop(false, false).show();
-                    return false;
-                })
-            })
-        })
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-                        "use strict";
-            $("#tabs1 ul li").each(function (i) {
-                $("#tabs_point li a:eq(" + i + ")").click(function () {
-                    var tab_id = i + 1;
-                    $("#tabs_point li a").removeClass("active");
-                    $(".tabs_block_point .active").removeClass("active");
-                    $(this).addClass("active");
-                    $(".tabs_block_point div").stop(false, false).hide();
-                    $("#point_tab" + tab_id).stop(false, false).show();
-                    return false;
-                })
-            })
-        })
-    </script>
 </body>
 </html>
